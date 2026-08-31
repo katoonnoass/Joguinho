@@ -51,19 +51,26 @@ class Backtester:
             if (cfg.prop is not None and use_prop_guard) else None)
 
     # ------------------------------------------------------------------ helpers
-    def _volume_for(self, signal: Signal, entry: float, equity: float,
-                    risk_cap: Optional[float]) -> float:
-        vol, amount = self.risk.position_size(equity, entry, signal.stop)
+    def _volume_for(self, decision, risk_cap: Optional[float]) -> float:
+        """Volume final da ordem.
+
+        Usa o volume que o RiskManager JÁ calculou em `evaluate` — que embute o
+        governador de drawdown e a redução após perdas. Recalcular aqui (como
+        era feito antes) fazia o backtest operar com um tamanho diferente do
+        que o robô usa ao vivo: mesma classe de bug que faz backtest bonito
+        virar prejuízo real.
+        """
+        vol, amount = decision.volume, decision.risk_amount
         if risk_cap is not None and amount > 0 and risk_cap < amount:
-            scaled = self.cfg.symbol.normalize_volume(vol * risk_cap / amount)
-            return scaled
+            return self.cfg.symbol.normalize_volume(vol * risk_cap / amount)
         return vol
 
     # ---------------------------------------------------------------------- run
     def run(self, candles: Sequence[Candle]) -> BacktestResult:
         cfg = self.cfg
         spec = cfg.symbol
-        broker = PaperBroker(spec, cfg.initial_balance, cfg.execution.slippage_points)
+        broker = PaperBroker(spec, cfg.initial_balance, cfg.execution.slippage_points,
+                             peak_equity=cfg.initial_peak_equity)
         atr_all = atr_series(candles, 14)
         pending: Optional[Signal] = None
         partial_done = False
@@ -109,7 +116,7 @@ class Backtester:
                 elif risk_cap is None and self.guard is not None:
                     pass                                  # já anotado acima
                 else:
-                    vol = self._volume_for(pending, candle.open, acc.equity, risk_cap)
+                    vol = self._volume_for(decision, risk_cap)
                     if vol <= 0:
                         note("volume abaixo do mínimo após corte da mesa")
                     else:

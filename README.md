@@ -38,7 +38,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 91 testes
+make test             # 102 testes
 ```
 
 ## Uso em 4 passos
@@ -57,6 +57,24 @@ make test             # 91 testes
 # 4. replay em modo paper (gera diário de operações em runs/)
 .venv/bin/hantecbot paper --csv data/synthetic_M15.csv
 ```
+
+## Meta dura de drawdown (2%)
+
+O risco de cada operação é limitado a uma fração da folga que ainda existe até a
+meta de drawdown — `risco = min(nominal, 0,30 × (meta − DD_atual))`. Perto do
+limite a aposta encolhe, então o drawdown **converge sem estourar**:
+
+```yaml
+risk:
+  target_max_drawdown_pct: 2.0   # meta dura (null desliga)
+  dd_budget_fraction: 0.30       # fração da folga arriscada por operação
+  dd_recovery_ratio: 0.90        # suspende no limite; volta com DD ≤ 1,8%
+```
+
+Em 4 anos e 7 meses de ouro (2022→2026): DD de **10,2% → 2,0%**, com profit factor,
+expectativa em R, Calmar e Sharpe iguais ou melhores. Detalhes, tabelas e os dois
+bugs de dimensionamento corrigidos no caminho em
+[`docs/drawdown-2pct.md`](docs/drawdown-2pct.md).
 
 ## Trava de liberação: o robô não vai ao vivo sem evidência
 

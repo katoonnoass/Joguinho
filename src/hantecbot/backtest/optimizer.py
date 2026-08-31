@@ -68,6 +68,7 @@ def walk_forward(cfg: BotConfig, candles: Sequence[Candle], space: Dict[str, Seq
     out = WalkForwardResult()
     window = n // folds
     equity = cfg.initial_balance
+    peak = cfg.initial_peak_equity or cfg.initial_balance
     curve: List[tuple] = []
     all_trades: List[Trade] = []
 
@@ -81,8 +82,10 @@ def walk_forward(cfg: BotConfig, candles: Sequence[Candle], space: Dict[str, Seq
         c = deepcopy(cfg)
         c.strategy.params = {**cfg.strategy.params, **best.params}
         c.initial_balance = equity
+        c.initial_peak_equity = peak
         res = Backtester(c).run(test)
         equity = res.metrics.final_equity
+        peak = max(peak, max((e for _, e in res.equity_curve), default=equity))
         curve.extend(res.equity_curve)
         all_trades.extend(res.trades)
         out.folds.append((best.params, res.metrics))

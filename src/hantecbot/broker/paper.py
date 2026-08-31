@@ -20,7 +20,7 @@ from .base import Broker, Quote
 
 class PaperBroker(Broker):
     def __init__(self, spec: SymbolSpec, balance: float = 10_000.0,
-                 slippage_points: float = 3.0):
+                 slippage_points: float = 3.0, peak_equity: Optional[float] = None):
         self.spec = spec
         self.balance = float(balance)
         self.start_balance = float(balance)
@@ -30,7 +30,7 @@ class PaperBroker(Broker):
         self._candles: List[Candle] = []
         self._now: Optional[datetime] = None
         self.equity_curve: List[tuple] = []   # (datetime, equity)
-        self.peak_equity = float(balance)
+        self.peak_equity = max(float(balance), float(peak_equity or 0.0))
         self.day_start_equity = float(balance)
         self._day: Optional[int] = None
         self.consecutive_losses = 0

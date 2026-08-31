@@ -24,6 +24,13 @@ class RiskConfig:
     max_lot: float = 5.0
     max_spread_points: float = 25.0       # não opera com spread alargado
     min_stop_points: float = 50.0
+    # --- governador de drawdown (meta dura de DD) --------------------------
+    # `target_max_drawdown_pct` é a META de drawdown, não o kill switch: o robô
+    # reduz o risco à medida que se aproxima dela e PARA de abrir posições ao
+    # tocá-la, voltando só depois de recuperar parte do prejuízo.
+    target_max_drawdown_pct: Optional[float] = None
+    dd_budget_fraction: float = 0.30      # % da folga até o alvo arriscada por trade
+    dd_recovery_ratio: float = 0.90       # volta a operar com DD ≤ alvo × isto
     trading_hours_utc: List[int] = field(default_factory=lambda: list(range(6, 21)))
     weekdays: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])  # seg-sex
     reduce_risk_after_loss: bool = True   # meio risco após perda (anti-tilt)
@@ -49,6 +56,9 @@ class BotConfig:
     symbol: SymbolSpec = field(default_factory=SymbolSpec)
     timeframe: str = "M15"
     initial_balance: float = 10_000.0
+    # pico de equity herdado (walk-forward encadeado / robô que já estava rodando):
+    # sem isso, cada janela recomeça o drawdown do zero e o DD medido mente
+    initial_peak_equity: Optional[float] = None
     magic: int = 990045
     strategy: StrategyConfig = field(default_factory=StrategyConfig)
     risk: RiskConfig = field(default_factory=RiskConfig)
@@ -82,7 +92,7 @@ class BotConfig:
                         else load_prop_rules(str(d["prop"])))
         if "guard" in d:
             cfg.guard = GuardConfig(**d["guard"])
-        for k in ("timeframe", "initial_balance", "magic", "mt5_login", "mt5_password",
+        for k in ("timeframe", "initial_balance", "initial_peak_equity", "magic", "mt5_login", "mt5_password",
                   "mt5_server", "mt5_terminal_path", "poll_seconds"):
             if k in d:
                 setattr(cfg, k, d[k])

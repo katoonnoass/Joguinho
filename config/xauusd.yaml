@@ -41,6 +41,11 @@ risk:
   risk_per_trade_pct: 0.5
   max_daily_loss_pct: 2.0
   max_drawdown_pct: 10.0
+  # Governador de drawdown: meta DURA de 2%. Cada operação arrisca no máximo
+  # 30% da folga que ainda existe até a meta, então o DD converge sem estourar.
+  target_max_drawdown_pct: 2.0
+  dd_budget_fraction: 0.30
+  dd_recovery_ratio: 0.90
   max_open_positions: 1
   max_consecutive_losses: 5
   max_lot: 5.0
