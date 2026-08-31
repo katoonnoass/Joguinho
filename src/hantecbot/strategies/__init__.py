@@ -6,10 +6,12 @@ from typing import Any, Dict
 from .base import Strategy, StrategyContext
 from .trend_atr import TrendATR
 from .mean_reversion import MeanReversion
+from .session_breakout import SessionBreakout
 
 REGISTRY: Dict[str, type] = {
     "trend_atr": TrendATR,
     "mean_reversion": MeanReversion,
+    "session_breakout": SessionBreakout,
 }
 
 
@@ -19,4 +21,5 @@ def build(name: str, params: Dict[str, Any] | None = None) -> Strategy:
     return REGISTRY[name](**(params or {}))
 
 
-__all__ = ["Strategy", "StrategyContext", "TrendATR", "MeanReversion", "REGISTRY", "build"]
+__all__ = ["Strategy", "StrategyContext", "TrendATR", "MeanReversion", "SessionBreakout",
+           "REGISTRY", "build"]

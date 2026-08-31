@@ -95,11 +95,17 @@ def _erfinv(x: float) -> float:
 
 def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
          strategies: Sequence[str], spaces: Dict[str, Dict[str, Sequence]], folds: int = 4,
-         specs: Optional[dict] = None) -> List[ScanRow]:
+         specs: Optional[dict] = None, dd_governor: bool = False) -> List[ScanRow]:
     """Roda walk-forward para cada (ativo, timeframe, estratégia).
 
     `spaces` mapeia nome da estratégia -> espaço de busca (cada estratégia tem
     parâmetros próprios).
+
+    `dd_governor=False` (padrão) **desliga** o governador de drawdown durante a
+    pesquisa. Motivo: o governador suspende entradas ao tocar a meta, o que
+    censura a amostra justamente nos períodos ruins e infla artificialmente as
+    métricas por operação. Mede-se o edge com risco constante; o governador é
+    decisão de *dimensionamento*, aplicada depois, na conta real.
     """
     from .models import SymbolSpec
 
@@ -122,6 +128,8 @@ def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
                 for k, v in overrides.items():
                     setattr(cfg.risk, k, v)
             cfg.risk.trading_hours_utc = list(range(24))
+            if not dd_governor:
+                cfg.risk.target_max_drawdown_pct = None
             try:
                 wf: WalkForwardResult = walk_forward(cfg, candles, space, folds=folds)
             except ValueError:

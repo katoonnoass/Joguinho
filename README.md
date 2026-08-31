@@ -18,7 +18,7 @@ ao vivo (demo por padrão).
 
 | Módulo | Papel |
 |---|---|
-| `hantecbot/strategies` | `trend_atr` (rompimento Donchian com filtro EMA+ADX) e `mean_reversion` (bandas + RSI em mercado lateral) |
+| `hantecbot/strategies` | `trend_atr` (rompimento Donchian com filtro EMA+ADX), `mean_reversion` (bandas + RSI em mercado lateral) e `session_breakout` (rompimento da faixa da madrugada na abertura de Londres) |
 | `hantecbot/risk.py` | tamanho de posição por % de equity, kill switch diário e de drawdown, filtros de spread/horário/stop mínimo |
 | `hantecbot/management.py` | breakeven, realização parcial em 1R e trailing por ATR — **o mesmo código no backtest e ao vivo** |
 | `hantecbot/backtest` | motor bar-a-bar com spread, slippage, comissão e swap; métricas (PF, expectativa em R, drawdown, Sharpe, Calmar) |
@@ -38,7 +38,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 102 testes
+make test             # 112 testes
 ```
 
 ## Uso em 4 passos
@@ -57,6 +57,16 @@ make test             # 102 testes
 # 4. replay em modo paper (gera diário de operações em runs/)
 .venv/bin/hantecbot paper --csv data/synthetic_M15.csv
 ```
+
+## Veredito atual da pesquisa (ago/2026)
+
+Dez anos de ouro (2016-2026, 3,7 milhões de candles M1), três estratégias, 1.920
+combinações testadas: **nenhuma vantagem estatística**. O melhor candidato tem
+t=+1,01 contra um limiar corrigido de 4,19 e, com parâmetros fixos no período
+completo, perde 7,3%. Resultado negativo documentado em
+[`docs/veredito-ouro.md`](docs/veredito-ouro.md) — inclusive a correção
+metodológica que o revelou (a varredura agora mede o edge com **risco constante**;
+o governador de drawdown é decisão de operação, não de pesquisa).
 
 ## Meta dura de drawdown (2%)
 
@@ -278,7 +288,8 @@ risco dispõe. Sinal sem stop definido é recusado por construção.
 ```
 src/hantecbot/
   models.py indicators.py stream.py risk.py management.py prop.py journal.py report.py cli.py
-  strategies/{base,trend_atr,mean_reversion}.py
+  strategies/{base,trend_atr,mean_reversion,session_breakout}.py
+  research.py validation.py
   broker/{base,paper,mt5}.py
   backtest/{engine,metrics,optimizer,challenge}.py
   live/runner.py

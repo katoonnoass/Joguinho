@@ -123,6 +123,9 @@ SCAN_SPACES = {
                        "rsi_buy": [25.0, 32.0], "rsi_sell": [68.0, 75.0],
                        "atr_stop_mult": [1.0, 2.0], "adx_max": [22.0, 30.0],
                        "trend_filter": [100]},
+    "session_breakout": {"range_end_hour": [6, 7, 8], "trade_until_hour": [12, 16],
+                         "atr_stop_mult": [1.0, 1.5], "reward_r": [1.5, 2.0, 3.0],
+                         "buffer_atr": [0.0, 0.10], "min_range_atr": [0.3, 0.6]},
 }
 
 
@@ -173,7 +176,12 @@ def cmd_scan(args) -> int:
         spaces = {st: spaces for st in strategies}    # um espaço único para todas
     print(f"\nRodando walk-forward ({args.folds} janelas) em {len(datasets)} séries × "
           f"{len(strategies)} estratégias...\n")
-    rows = scan(datasets, cfg, strategies, spaces, folds=args.folds, specs=specs)
+    if not args.with_governor and cfg.risk.target_max_drawdown_pct:
+        print(f"• governador de DD ({cfg.risk.target_max_drawdown_pct:.1f}%) DESLIGADO na "
+              "pesquisa: risco constante mede o edge sem censurar a amostra "
+              "(use --with-governor para incluí-lo)")
+    rows = scan(datasets, cfg, strategies, spaces, folds=args.folds, specs=specs,
+                dd_governor=args.with_governor)
     print(render_scan(rows))
 
     # --- carteira: séries com expectativa positiva compartilhando o mesmo capital
@@ -191,6 +199,8 @@ def cmd_scan(args) -> int:
         best = rows[0]
         candles = datasets[(best.symbol, best.timeframe)]
         cbest = _cfg_for(cfg, specs, best)
+        if not args.with_governor:
+            cbest.risk.target_max_drawdown_pct = None   # mesmo regime da varredura
         params = best.params_por_janela[-1] if best.params_por_janela else {}
         print(f"\nEstressando o melhor candidato ({best.symbol} {best.timeframe} "
               f"{best.strategy}, params {params}) — série completa, referência:")
@@ -299,6 +309,9 @@ DEFAULT_SPACES = {
     "mean_reversion": {"ma_period": [20, 30], "band_mult": [2.0, 2.5],
                        "rsi_buy": [20.0, 25.0, 30.0], "atr_stop_mult": [1.0, 1.5, 2.0],
                        "adx_max": [18.0, 22.0]},
+    "session_breakout": {"range_end_hour": [6, 7, 8], "trade_until_hour": [12, 16],
+                         "atr_stop_mult": [1.0, 1.5], "reward_r": [1.5, 2.0, 3.0],
+                         "buffer_atr": [0.0, 0.10], "min_range_atr": [0.3, 0.6]},
 }
 
 
@@ -444,7 +457,8 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--bars", type=int, default=20000, help="candles sintéticos se não houver CSV")
         sp.add_argument("--limit", type=int, help="usar apenas os N candles finais")
         sp.add_argument("--seed", type=int, default=42)
-        sp.add_argument("--strategy", choices=["trend_atr", "mean_reversion"])
+        sp.add_argument("--strategy",
+                        choices=["trend_atr", "mean_reversion", "session_breakout"])
         sp.add_argument("--resample", help="agregar para outro timeframe (H1, H4, D1...)")
         sp.add_argument("--source-tf", default="M15", help="timeframe do CSV de origem")
 
@@ -490,6 +504,8 @@ def build_parser() -> argparse.ArgumentParser:
     sc.add_argument("--folds", type=int, default=4)
     sc.add_argument("--gate", help="salvar veredito de liberação neste arquivo")
     sc.add_argument("--demo-days", type=int, help="dias já rodados em conta demo")
+    sc.add_argument("--with-governor", action="store_true",
+                    help="manter o governador de drawdown ligado durante a pesquisa")
     sc.add_argument("--stress", action="store_true",
                     help="testar o melhor candidato com custos maiores e parâmetros vizinhos")
     sc.set_defaults(func=cmd_scan)
