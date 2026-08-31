@@ -25,7 +25,8 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from .backtest.metrics import Metrics
 from .backtest.optimizer import WalkForwardResult, walk_forward
 from .config import BotConfig
-from .models import Candle
+from .models import Candle, Trade
+from .validation import bootstrap_mean, deflated_sharpe
 
 
 # --------------------------------------------------------------------------- scan
@@ -44,6 +45,9 @@ class ScanRow:
     t_stat: float
     combos_tested: int
     params_por_janela: List[dict] = field(default_factory=list)
+    p_value: float = 1.0           # bootstrap por blocos: P(média ≤ 0)
+    dsr: float = 0.0               # deflated sharpe (0-1), já descontando a busca
+    trades_oos: List[Trade] = field(default_factory=list, repr=False)
 
     @property
     def consistencia(self) -> float:
@@ -53,7 +57,8 @@ class ScanRow:
         return (f"{self.symbol:8s} {self.timeframe:>4s} {self.strategy:<15s} "
                 f"{self.oos_trades:6d} {self.oos_return_pct:+8.2f}% {self.oos_profit_factor:6.2f} "
                 f"{self.oos_max_dd_pct:7.2f}% {self.oos_expectancy_r:+7.3f} "
-                f"{self.folds_positive}/{self.folds_total}  t={self.t_stat:+.2f}")
+                f"{self.folds_positive}/{self.folds_total}  t={self.t_stat:+.2f} "
+                f"p={self.p_value:6.4f} DSR={self.dsr:5.3f}")
 
 
 def t_statistic(trade_returns: Sequence[float]) -> float:
@@ -123,6 +128,8 @@ def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
                 continue
             m: Metrics = wf.oos_metrics
             rs = [t.r_multiple for t in wf.oos_trades]
+            combos = combos_per_wf * folds
+            boot = bootstrap_mean(rs, n_boot=2000, block=5)
             rows.append(ScanRow(
                 symbol=symbol, timeframe=tf, strategy=strat,
                 oos_trades=m.trades, oos_return_pct=m.return_pct,
@@ -130,8 +137,10 @@ def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
                 oos_expectancy_r=m.expectancy_r,
                 folds_positive=sum(1 for _, fm in wf.folds if fm.return_pct > 0),
                 folds_total=len(wf.folds), t_stat=t_statistic(rs),
-                combos_tested=combos_per_wf * folds,
-                params_por_janela=[p for p, _ in wf.folds]))
+                combos_tested=combos,
+                params_por_janela=[p for p, _ in wf.folds],
+                p_value=boot.p_value, dsr=deflated_sharpe(rs, combos),
+                trades_oos=list(wf.oos_trades)))
     rows.sort(key=lambda r: (r.t_stat, r.oos_return_pct), reverse=True)
     return rows
 
@@ -143,8 +152,8 @@ def render_scan(rows: Sequence[ScanRow], alpha: float = 0.05) -> str:
     t_crit = significance_threshold(total, alpha)
     out = [
         f"{'ATIVO':8s} {'TF':>4s} {'ESTRATÉGIA':<15s} {'TRADES':>6s} {'RET OOS':>9s} "
-        f"{'PF':>6s} {'DD':>8s} {'EXP(R)':>7s} {'JANELAS+':>8s}  t",
-        "-" * 92,
+        f"{'PF':>6s} {'DD':>8s} {'EXP(R)':>7s} {'JANELAS+':>8s}  t        p      DSR",
+        "-" * 116,
     ]
     out += [r.as_row() for r in rows]
     out += [
@@ -170,6 +179,10 @@ class GateCriteria:
     min_t_stat: float = 2.0
     min_prob_aprovacao: float = 50.0      # Monte Carlo, quando houver mesa
     require_demo_days: int = 60
+    max_p_value: float = 0.05             # bootstrap, ainda corrigido por Šidák
+    min_dsr: float = 0.95                 # deflated sharpe
+    min_cost_survival: float = 1.5        # sobrevive a 1,5x os custos supostos
+    min_stability_pct: float = 60.0       # % de vizinhos de parâmetros positivos
 
 
 @dataclass
@@ -209,10 +222,13 @@ class GateResult:
 def evaluate_gate(row: ScanRow, criteria: Optional[GateCriteria] = None,
                   prob_aprovacao: Optional[float] = None,
                   demo_days: Optional[int] = None,
-                  combos_tested: Optional[int] = None) -> GateResult:
+                  combos_tested: Optional[int] = None,
+                  cost_survival: Optional[float] = None,
+                  stability_pct: Optional[float] = None) -> GateResult:
     c = criteria or GateCriteria()
     n = combos_tested if combos_tested is not None else row.combos_tested
     t_crit = max(c.min_t_stat, significance_threshold(n))
+    alpha_c = min(c.max_p_value, 1.0 - (1.0 - c.max_p_value) ** (1.0 / max(1, n)))
     checks: List[Tuple[str, bool, str]] = [
         ("amostra out-of-sample", row.oos_trades >= c.min_oos_trades,
          f"{row.oos_trades} trades (mín. {c.min_oos_trades})"),
@@ -227,7 +243,18 @@ def evaluate_gate(row: ScanRow, criteria: Optional[GateCriteria] = None,
          f"(mín. {c.min_folds_positive_pct:.0f}%)"),
         ("significância corrigida", row.t_stat >= t_crit,
          f"t={row.t_stat:+.2f} (mín. {t_crit:.2f} após {n} testes)"),
+        ("bootstrap por blocos", row.p_value <= alpha_c,
+         f"p={row.p_value:.4f} (máx. {alpha_c:.5f} = alpha corrigido)"),
+        ("deflated sharpe", row.dsr >= c.min_dsr,
+         f"DSR={row.dsr:.3f} (mín. {c.min_dsr:.2f})"),
     ]
+    if cost_survival is not None:
+        checks.append(("resiste a custos maiores", cost_survival >= c.min_cost_survival,
+                       f"sobrevive até ×{cost_survival:.1f} (mín. ×{c.min_cost_survival:.1f})"))
+    if stability_pct is not None:
+        checks.append(("platô de parâmetros", stability_pct >= c.min_stability_pct,
+                       f"{stability_pct:.0f}% dos vizinhos positivos "
+                       f"(mín. {c.min_stability_pct:.0f}%)"))
     if prob_aprovacao is not None:
         checks.append(("P(aprovar) na mesa", prob_aprovacao >= c.min_prob_aprovacao,
                        f"{prob_aprovacao:.1f}% (mín. {c.min_prob_aprovacao}%)"))

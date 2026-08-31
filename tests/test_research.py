@@ -16,7 +16,8 @@ def row(**over) -> ScanRow:
     base = dict(symbol="EURUSD", timeframe="H4", strategy="trend_atr",
                 oos_trades=250, oos_return_pct=18.0, oos_profit_factor=1.5,
                 oos_max_dd_pct=8.0, oos_expectancy_r=0.15, folds_positive=4,
-                folds_total=4, t_stat=5.0, combos_tested=100)
+                folds_total=4, t_stat=5.0, combos_tested=100,
+                p_value=0.0001, dsr=0.99)
     base.update(over)
     return ScanRow(**base)
 
@@ -66,6 +67,31 @@ def test_gate_reprova_resultado_bonito_mas_sem_significancia():
     nomes = {nome for nome, ok, _ in g.checks if not ok}
     assert "significância corrigida" in nomes
     assert "amostra out-of-sample" in nomes
+
+
+def test_gate_reprova_por_pvalue_ou_dsr_fracos():
+    """t alto não basta: bootstrap e deflated sharpe também precisam passar."""
+    g = evaluate_gate(row(p_value=0.20), demo_days=90, prob_aprovacao=90.0)
+    assert not g.aprovado
+    assert any(n == "bootstrap por blocos" and not ok for n, ok, _ in g.checks)
+
+    g2 = evaluate_gate(row(dsr=0.40), demo_days=90, prob_aprovacao=90.0)
+    assert not g2.aprovado
+    assert any(n == "deflated sharpe" and not ok for n, ok, _ in g2.checks)
+
+
+def test_gate_checa_custos_e_platô_quando_informados():
+    ok_gate = evaluate_gate(row(), demo_days=90, prob_aprovacao=90.0,
+                            cost_survival=2.0, stability_pct=80.0)
+    assert ok_gate.aprovado
+    frágil = evaluate_gate(row(), demo_days=90, prob_aprovacao=90.0,
+                           cost_survival=1.0, stability_pct=80.0)
+    assert not frágil.aprovado
+    assert any(n == "resiste a custos maiores" and not ok for n, ok, _ in frágil.checks)
+    pico = evaluate_gate(row(), demo_days=90, prob_aprovacao=90.0,
+                         cost_survival=2.0, stability_pct=10.0)
+    assert not pico.aprovado
+    assert any(n == "platô de parâmetros" and not ok for n, ok, _ in pico.checks)
 
 
 def test_gate_reprova_sem_dias_de_demo():

@@ -24,6 +24,7 @@ from .config import BotConfig, load_prop_rules
 from .data import generate, load_csv, resample, save_csv
 from .journal import Journal
 from .research import (GateCriteria, GateResult, evaluate_gate, render_scan, scan)
+from .validation import cost_stress, neighborhood_stability, portfolio
 from .models import Candle
 from .report import write_report
 
@@ -125,6 +126,24 @@ SCAN_SPACES = {
 }
 
 
+def _cfg_for(cfg, specs: dict, row) -> "BotConfig":
+    """Config equivalente à usada no scan para um (ativo, timeframe, estratégia)."""
+    from .models import SymbolSpec
+
+    c = deepcopy(cfg)
+    c.timeframe = row.timeframe
+    c.strategy.name = row.strategy
+    c.strategy.params = {}
+    if specs and row.symbol in specs:
+        spec_cfg = dict(specs[row.symbol])
+        overrides = spec_cfg.pop("risk_overrides", {}) or {}
+        c.symbol = SymbolSpec(**spec_cfg)
+        for k, v in overrides.items():
+            setattr(c.risk, k, v)
+    c.risk.trading_hours_utc = list(range(24))
+    return c
+
+
 def cmd_scan(args) -> int:
     """Procura vantagem estatística em vários ativos/timeframes — e desconta o viés."""
     from .data import load_csv, resample
@@ -157,10 +176,36 @@ def cmd_scan(args) -> int:
     rows = scan(datasets, cfg, strategies, spaces, folds=args.folds, specs=specs)
     print(render_scan(rows))
 
+    # --- carteira: séries com expectativa positiva compartilhando o mesmo capital
+    positivas = [r for r in rows if r.oos_expectancy_r > 0 and r.oos_trades >= 20]
+    if len(positivas) >= 2:
+        pf = portfolio([(f"{r.symbol} {r.timeframe} {r.strategy}", r.trades_oos)
+                        for r in positivas],
+                       initial_balance=cfg.initial_balance,
+                       risk_per_trade_pct=cfg.risk.risk_per_trade_pct)
+        print("\n" + pf.render())
+        print("  (diversificar não cria vantagem: só reduz a variância da que existir)")
+
+    stress = stability = None
+    if rows and args.stress:
+        best = rows[0]
+        candles = datasets[(best.symbol, best.timeframe)]
+        cbest = _cfg_for(cfg, specs, best)
+        params = best.params_por_janela[-1] if best.params_por_janela else {}
+        print(f"\nEstressando o melhor candidato ({best.symbol} {best.timeframe} "
+              f"{best.strategy}, params {params}) — série completa, referência:")
+        stress = cost_stress(cbest, candles, params)
+        print(stress.render())
+        stability = neighborhood_stability(cbest, candles, params,
+                                           spaces.get(best.strategy, {}))
+        print(stability.render())
+
     if rows and args.gate:
         gate = evaluate_gate(rows[0], GateCriteria(),
                              demo_days=args.demo_days,
-                             combos_tested=sum(r.combos_tested for r in rows))
+                             combos_tested=sum(r.combos_tested for r in rows),
+                             cost_survival=stress.survives_at if stress else None,
+                             stability_pct=stability.positive_pct if stability else None)
         print("\n" + gate.render())
         path = gate.save(args.gate)
         print(f"\n✓ veredito salvo em {path} (o comando `live` exige este arquivo)")
@@ -445,6 +490,8 @@ def build_parser() -> argparse.ArgumentParser:
     sc.add_argument("--folds", type=int, default=4)
     sc.add_argument("--gate", help="salvar veredito de liberação neste arquivo")
     sc.add_argument("--demo-days", type=int, help="dias já rodados em conta demo")
+    sc.add_argument("--stress", action="store_true",
+                    help="testar o melhor candidato com custos maiores e parâmetros vizinhos")
     sc.set_defaults(func=cmd_scan)
 
     g = sub.add_parser("gate", help="ver o veredito de liberação para o vivo")

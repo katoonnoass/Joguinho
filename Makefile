@@ -25,7 +25,7 @@ import-real:
 scan:
 	.venv/bin/hantecbot scan --data EURUSD:data/EURUSD_H1.csv:H1:H1,H4 \
 		XAUUSD:data/XAUUSD_M15.csv:M15:H1,H4 \
-		--strategies trend_atr,mean_reversion --folds 4 --gate runs/gate.json
+		--strategies trend_atr,mean_reversion --folds 4 --stress --gate runs/gate.json
 
 clean:
 	rm -rf .pytest_cache **/__pycache__ reports runs

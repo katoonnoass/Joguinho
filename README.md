@@ -30,6 +30,7 @@ ao vivo (demo por padrão).
 | `hantecbot/prop.py` | **conformidade com mesa proprietária**: pisos diário/total, risco máximo, dias lucrativos, consistência, inatividade |
 | `hantecbot/backtest/challenge.py` | simula a homologação (fases encadeadas) e estima **P(aprovar)** por Monte Carlo |
 | `hantecbot/research.py` | varredura multi-ativo, correção de múltiplos testes e **trava de liberação** para o vivo |
+| `hantecbot/validation.py` | bootstrap por blocos, deflated sharpe, estresse de custos, platô de parâmetros e carteira |
 
 Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
@@ -37,7 +38,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 74 testes
+make test             # 91 testes
 ```
 
 ## Uso em 4 passos
@@ -65,30 +66,49 @@ Por isso `hantecbot live` **recusa** rodar sem um veredito aprovado:
 ```bash
 hantecbot scan --data XAUUSD:data/XAUUSD_M15.csv:M15:H1,H4 \
                      EURUSD:data/EURUSD_H1.csv:H1:H1,H4 \
-    --strategies trend_atr,mean_reversion --folds 4 --gate runs/gate.json
+    --strategies trend_atr,mean_reversion --folds 4 --stress --gate runs/gate.json
 hantecbot gate            # ver o veredito
 hantecbot live --plano double_stage   # bloqueado até o veredito ser aprovado
 ```
 
-O scan roda walk-forward em cada (ativo, timeframe, estratégia) e — o detalhe que
-quase ninguém aplica — **corrige a significância pelo número de combinações testadas**
-(Šidák): testar 3.456 configurações produz "vencedoras" por puro acaso.
+O scan roda walk-forward em cada (ativo, timeframe, estratégia) e aplica **cinco
+filtros de autoengano** — quase nunca usados juntos em robôs de varejo:
+
+1. **Correção de múltiplos testes (Šidák)** — testar 4.032 configurações produz
+   "vencedoras" por puro acaso; o t exigido sobe junto com o número de testes.
+2. **Bootstrap por blocos** — reamostra os R-múltiplos em blocos (preserva as
+   sequências de perdas) e mede P(média ≤ 0), sem supor normalidade.
+3. **Deflated Sharpe Ratio** (Bailey & López de Prado) — desconta o Sharpe que o
+   *melhor de N tentativas* exibiria no ruído, corrigindo assimetria e caudas.
+4. **Estresse de custos** (`--stress`) — repete tudo com spread, comissão, swap e
+   slippage ×1,5 e ×2. Vantagem que morre com custo maior não é vantagem.
+5. **Platô de parâmetros** (`--stress`) — testa os vizinhos do conjunto escolhido:
+   pico isolado é sobreajuste, platô é robustez.
+
+Além disso o scan monta uma **carteira** com as séries de expectativa positiva
+(mesmo capital, risco por operação normalizado): diversificar não cria vantagem,
+mas reduz a variância da que existir.
 
 ```
-Combinações testadas no total: 3456
-t crítico com correção de múltiplos testes: 4.32
-Melhor t observado: +1.02 → NÃO É EVIDÊNCIA: dentro do que a sorte explica
+Combinações testadas no total: 4032
+t crítico com correção de múltiplos testes (Šidák): 4.36
+Melhor t observado: +2.23 → NÃO É EVIDÊNCIA: dentro do que a sorte explica
 
-  [ ] amostra out-of-sample        8 trades (mín. 200)
-  [x] profit factor OOS            2.83 (mín. 1.2)
-  [ ] significância corrigida      t=+1.02 (mín. 4.32 após 3456 testes)
-  [ ] dias em conta demo           não informado (mín. 60)
+  [ ] amostra out-of-sample          32 trades (mín. 200)
+  [x] profit factor OOS              2.46 (mín. 1.2)
+  [ ] significância corrigida        t=+2.23 (mín. 4.36 após 4032 testes)
+  [ ] bootstrap por blocos           p=0.0015 (máx. 0.00001 = alpha corrigido)
+  [ ] deflated sharpe                DSR=0.307 (mín. 0.95)
+  [x] resiste a custos maiores       sobrevive até ×2.0 (mín. ×1.5)
+  [x] platô de parâmetros            100% dos vizinhos positivos (mín. 60%)
+  [ ] dias em conta demo             não informado (mín. 60)
 🚫 BLOQUEADO — não pague desafio nem ligue conta real ainda
 ```
 
-Melhor candidato encontrado até agora: **XAU/USD H4** (PF 2,46, 4/4 janelas positivas,
-DD 1,27%) — ainda assim **reprovado** por amostra pequena (32 trades). Detalhes,
-tabela completa e o caminho para virar o jogo em
+Melhor candidato encontrado até agora: **XAU/USD H4** (PF 2,46, 4/4 janelas
+positivas, DD 1,27%, sobrevive a 2× os custos, 6/6 vizinhos positivos) — ainda
+assim **reprovado**: 32 trades não provam nada. Detalhes, tabela completa e o
+caminho para virar o jogo em
 [`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md).
 
 ## Mesa proprietária (Fimathe) — homologação do EA
