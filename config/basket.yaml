@@ -1,0 +1,43 @@
+# Cesta diária pré-registrada (D1) — trend following clássico em 5 mercados.
+#
+# REGRA DE OURO deste arquivo: os parâmetros são PRÉ-REGISTRADOS, não otimizados.
+# São os valores canônicos de seguidores de tendência (média rápida 50 / lenta
+# 200, rompimento de 55 dias, stop 3 ATR, alvo 5R). Nada foi ajustado ao
+# histórico — por isso o resultado do backtest tem valor estatístico: a correção
+# de múltiplos testes considera apenas as `tentativas` declaradas abaixo.
+#
+# `tentativas: 6` = número de conjuntos canônicos avaliados (rápido 10/50,
+# médio 20/100, lento 50/200). Se você começar a ajustar parâmetros, ATUALIZE
+# este número — é ele que define a barra de significância.
+
+nome: cesta_d1_trend
+tentativas: 6
+
+estrategia: trend_atr
+parametros:
+  fast: 50
+  slow: 200
+  breakout: 55
+  atr_period: 14
+  atr_stop_mult: 3.0
+  reward_r: 5.0
+  adx_min: 20           # exige tendência com força mínima
+  allow_short: true
+
+carteira:
+  risco_por_operacao_pct: 2.0   # nominal; o governador reduz sozinho
+  meta_drawdown_pct: 2.0        # meta dura de DD da carteira
+  budget_fraction: 0.30
+  saldo_inicial: 100000
+
+mercados:
+  - symbol: XAUUSD
+    csv: data/XAUUSD_D1.csv
+  - symbol: EURUSD
+    csv: data/EURUSD_D1.csv
+  - symbol: US500
+    csv: data/US500_D1.csv
+  - symbol: USDX
+    csv: data/USDX_D1.csv
+  - symbol: BTCUSD
+    csv: data/BTCUSD_D1.csv

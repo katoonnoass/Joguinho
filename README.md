@@ -31,6 +31,7 @@ ao vivo (demo por padrão).
 | `hantecbot/backtest/challenge.py` | simula a homologação (fases encadeadas) e estima **P(aprovar)** por Monte Carlo |
 | `hantecbot/research.py` | varredura multi-ativo, correção de múltiplos testes e **trava de liberação** para o vivo |
 | `hantecbot/validation.py` | bootstrap por blocos, deflated sharpe, estresse de custos, platô de parâmetros e carteira |
+| `hantecbot/basket.py` | **cesta multi-mercado pré-registrada** (`config/basket.yaml`): roda os 5 mercados com risco constante e aplica o governador de drawdown na carteira |
 
 Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
@@ -38,7 +39,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 112 testes
+make test             # 122 testes
 ```
 
 ## Uso em 4 passos
@@ -60,12 +61,29 @@ make test             # 112 testes
 
 ## Veredito atual da pesquisa (ago/2026)
 
-Dez anos de ouro (2016-2026, 3,7 milhões de candles M1), três estratégias, 1.920
-combinações testadas: **nenhuma vantagem estatística**. O melhor candidato tem
-t=+1,01 contra um limiar corrigido de 4,19 e, com parâmetros fixos no período
-completo, perde 7,3%. Resultado negativo documentado em
+**Onde há vantagem: cesta D1 de 5 mercados.** Seguidor de tendência lento
+(50/200, rompimento de 55 dias, ADX≥20) rodando em XAUUSD, EURUSD, US500, USDX e
+BTCUSD com parâmetros **pré-registrados** em [`config/basket.yaml`](config/basket.yaml),
+26 anos de histórico:
+
+| operações | retorno (DD travado em 2%) | PF | DD | expectativa | t | p | DSR |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 488 | +15,61% | 1,45 | 1,97% | +0,146 R | +3,94 | 0,0002 | 0,996 |
+
+Passa **10 das 11 checagens** da trava de liberação. A única pendente é a que não
+se resolve com CPU: **60 dias em conta demo**. Detalhes, as 6 configurações
+testadas (todas publicadas), subperíodos e estresse de custos em
+[`docs/cesta-d1.md`](docs/cesta-d1.md).
+
+```bash
+hantecbot basket --stress --gate runs/gate.json
+```
+
+**Onde não há: ouro intradiário.** Dez anos de M1 (3,7 milhões de candles), três
+estratégias, 1.920 combinações: t=+1,01 contra um limiar corrigido de 4,19. Em
+M15 o custo de transação come toda a margem. Resultado negativo documentado em
 [`docs/veredito-ouro.md`](docs/veredito-ouro.md) — inclusive a correção
-metodológica que o revelou (a varredura agora mede o edge com **risco constante**;
+metodológica que o revelou (a varredura mede o edge com **risco constante**;
 o governador de drawdown é decisão de operação, não de pesquisa).
 
 ## Meta dura de drawdown (2%)
@@ -117,33 +135,36 @@ Além disso o scan monta uma **carteira** com as séries de expectativa positiva
 (mesmo capital, risco por operação normalizado): diversificar não cria vantagem,
 mas reduz a variância da que existir.
 
-```
-Combinações testadas no total: 4032
-t crítico com correção de múltiplos testes (Šidák): 4.36
-Melhor t observado: +2.23 → NÃO É EVIDÊNCIA: dentro do que a sorte explica
+Veredito atual da cesta D1 (`hantecbot basket --stress --gate runs/gate.json`):
 
-  [ ] amostra out-of-sample          32 trades (mín. 200)
-  [x] profit factor OOS              2.46 (mín. 1.2)
-  [ ] significância corrigida        t=+2.23 (mín. 4.36 após 4032 testes)
-  [ ] bootstrap por blocos           p=0.0015 (máx. 0.00001 = alpha corrigido)
-  [ ] deflated sharpe                DSR=0.307 (mín. 0.95)
-  [x] resiste a custos maiores       sobrevive até ×2.0 (mín. ×1.5)
+```
+Configurações declaradas antes de olhar o resultado: 6
+t crítico com correção de múltiplos testes (Šidák): 2.63
+t observado: +3.94 → EVIDÊNCIA: além do que a sorte explica
+
+  [x] amostra                        488 trades (mín. 200)
+  [x] profit factor                  1.45 (mín. 1.2)
+  [x] drawdown máximo                1.97% (máx. 12%)
+  [x] expectativa por operação       +0.146 R (mín. 0.05)
+  [x] consistência anual             19/26 anos positivos (mín. 70%)
+  [x] significância corrigida        t=+3.94 (mín. 2.63 após 6 testes)
+  [x] bootstrap por blocos           p=0.00020 (máx. 0.00851 = alpha corrigido)
+  [x] deflated sharpe                DSR=0.996 (mín. 0.95)
+  [x] resiste a custos maiores       sobrevive até ×3.0 (mín. ×1.5)
   [x] platô de parâmetros            100% dos vizinhos positivos (mín. 60%)
   [ ] dias em conta demo             não informado (mín. 60)
-🚫 BLOQUEADO — não pague desafio nem ligue conta real ainda
+🚫 BLOQUEADO — 10 de 11 critérios aprovados; falta o tempo de demo
 ```
 
-> **Atualização (ago/2026):** esse candidato foi testado em dados de 2024→2026 que
-> ele nunca tinha visto e **falhou** (−1,10%, PF 0,96). A trava fez seu trabalho.
-> Ver [`docs/backtest-xauusd-2024-2026.md`](docs/backtest-xauusd-2024-2026.md).
+A trava continua fechada de propósito: 60 dias de conta demo é o único critério
+que nenhuma quantidade de CPU resolve, porque o que ele mede é **execução real**
+— spread, slippage e requotes da sua conta Hantec contra o simulado.
 
-Melhor candidato encontrado até agora: **XAU/USD H4** (PF 2,46, 4/4 janelas
-positivas, DD 1,27%, sobrevive a 2× os custos, 6/6 vizinhos positivos) — ainda
-assim **reprovado**: 32 trades não provam nada. Detalhes, tabela completa e o
-caminho para virar o jogo em
-[`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md); o teste em dados de
-2024→2026 (ouro M1 do feed cTrader, spread real medido) em
-[`docs/backtest-xauusd-2024-2026.md`](docs/backtest-xauusd-2024-2026.md).
+> **Histórico:** o candidato anterior (XAU/USD H4, PF 2,46 em 32 trades) foi
+> testado em dados de 2024→2026 que nunca tinha visto e **falhou** (−1,10%,
+> PF 0,96). A trava fez seu trabalho. Ver
+> [`docs/backtest-xauusd-2024-2026.md`](docs/backtest-xauusd-2024-2026.md) e
+> [`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md).
 
 ## Mesa proprietária (Fimathe) — homologação do EA
 
@@ -289,17 +310,19 @@ risco dispõe. Sinal sem stop definido é recusado por construção.
 src/hantecbot/
   models.py indicators.py stream.py risk.py management.py prop.py journal.py report.py cli.py
   strategies/{base,trend_atr,mean_reversion,session_breakout}.py
-  research.py validation.py
+  research.py validation.py basket.py
   broker/{base,paper,mt5}.py
   backtest/{engine,metrics,optimizer,challenge}.py
   live/runner.py
-config/default.yaml   config/fimathe/*.yaml   docs/regras-fimathe.md
+config/default.yaml   config/basket.yaml   config/fimathe/*.yaml   docs/regras-fimathe.md
 tests/   Makefile   ci/github-actions-ci.yml
 ```
 
 ## Roadmap
 
-- [ ] múltiplos símbolos em paralelo com limite de risco por portfólio
+- [x] múltiplos símbolos com limite de risco por carteira (`hantecbot basket`)
+- [ ] 60 dias de conta demo na Hantec — o único critério que falta no veredito
+- [ ] execução ao vivo da cesta D1 (hoje o `basket` é só pesquisa)
 - [ ] filtro de calendário econômico (não operar 15 min antes de NFP/CPI)
 - [ ] otimização bayesiana no lugar do grid
 - [ ] notificações via Telegram

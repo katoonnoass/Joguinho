@@ -23,6 +23,7 @@ from .backtest.optimizer import optimize, walk_forward
 from .config import BotConfig, load_prop_rules
 from .data import generate, load_csv, resample, save_csv
 from .journal import Journal
+from .basket import (BasketSpec, cost_curve, neighbour_curve, run_basket, subperiodos)
 from .research import (GateCriteria, GateResult, evaluate_gate, render_scan, scan)
 from .validation import cost_stress, neighborhood_stability, portfolio
 from .models import Candle
@@ -181,7 +182,7 @@ def cmd_scan(args) -> int:
               "pesquisa: risco constante mede o edge sem censurar a amostra "
               "(use --with-governor para incluí-lo)")
     rows = scan(datasets, cfg, strategies, spaces, folds=args.folds, specs=specs,
-                dd_governor=args.with_governor)
+                dd_governor=args.with_governor, scheme=args.scheme)
     print(render_scan(rows))
 
     # --- carteira: séries com expectativa positiva compartilhando o mesmo capital
@@ -221,6 +222,67 @@ def cmd_scan(args) -> int:
         print(f"\n✓ veredito salvo em {path} (o comando `live` exige este arquivo)")
     print(DISCLAIMER)
     return 0
+
+
+def cmd_basket(args) -> int:
+    """Roda a cesta pré-registrada: vários mercados, um capital, um veredito."""
+    cfg = _load_cfg(args.config)
+    specs = _load_specs()
+    spec = BasketSpec.load(args.spec)
+    if args.risk:
+        spec.risco_pct = args.risk
+    if args.target_dd is not None:
+        spec.meta_dd_pct = args.target_dd or None
+    cache: dict = {}
+    res = run_basket(cfg, spec, specs, candles_cache=cache)
+    print()
+    print(res.render())
+
+    print("\nSoma de R por ano:")
+    linha = " ".join(f"{ano}:{soma:+.1f}" for ano, soma in res.anos)
+    print("  " + linha)
+
+    cortes = [(res.anos[0][0], res.anos[0][0] + 8),
+              (res.anos[0][0] + 9, res.anos[0][0] + 16),
+              (res.anos[0][0] + 17, res.anos[-1][0])] if res.anos else []
+    subs = subperiodos(res, cortes)
+    if subs:
+        print("\nSubperíodos (a mesma cesta, sem reajuste):")
+        for l in subs:
+            print(f"  {l['de']}-{l['ate']}: {l['trades']:4d} tr | ret {l['ret']:+6.2f}% | "
+                  f"PF {l['pf']:.2f} | DD {l['dd']:.2f}% | exp {l['exp']:+.3f} R | "
+                  f"t={l['t']:+.2f} | p={l['p']:.3f}")
+
+    sobrevive = None
+    estabilidade = None
+    if args.stress:
+        print("\nEstresse de custos (spread, comissão, swap e slippage multiplicados):")
+        sobrevive = 0.0
+        for mult, r in cost_curve(cfg, spec, specs, cache=cache):
+            m = r.carteira.metrics
+            print(f"  ×{mult:<4.1f} {r.carteira.trades:4d} tr | ret {m.return_pct:+6.2f}% | "
+                  f"PF {m.profit_factor:5.2f} | DD {m.max_drawdown_pct:5.2f}% | t={r.carteira.t_stat:+.2f}")
+            if m.profit_factor >= 1.05:
+                sobrevive = max(sobrevive, mult)
+        print(f"  → sobrevive (PF ≥ 1,05) até ×{sobrevive:.1f}")
+
+        viz = neighbour_curve(cfg, spec, specs, cache=cache)
+        positivos = sum(1 for _, _, e in viz if e > 0)
+        print("\nVizinhos de parâmetros (expectativa da cesta em R):")
+        for chave, valor, exp in viz:
+            print(f"  {chave}={valor:<7} {exp:+.3f} R")
+        estabilidade = 100.0 * positivos / len(viz) if viz else 0.0
+        print(f"  → {positivos}/{len(viz)} positivos ({estabilidade:.0f}%)")
+
+    row = res.as_scan_row()
+    gate = evaluate_gate(row, GateCriteria(), demo_days=args.demo_days,
+                         combos_tested=spec.tentativas,
+                         cost_survival=sobrevive, stability_pct=estabilidade)
+    print("\n" + gate.render())
+    if args.gate:
+        print(f"\n✓ veredito salvo em {gate.save(args.gate)}")
+    print(DISCLAIMER)
+    return 0 if gate.aprovado else 1
 
 
 def cmd_gate(args) -> int:
@@ -352,7 +414,8 @@ def cmd_walkforward(args) -> int:
     if args.strategy:
         cfg.strategy.name = args.strategy
     candles = _candles(args, cfg)
-    wf = walk_forward(cfg, candles, _space(args, cfg), folds=args.folds)
+    wf = walk_forward(cfg, candles, _space(args, cfg), folds=args.folds,
+                      scheme=getattr(args, "scheme", "anchored"))
     print(wf.render())
     if args.report:
         path = write_report(args.report, wf.oos_metrics, wf.oos_trades, wf.equity_curve,
@@ -486,6 +549,8 @@ def build_parser() -> argparse.ArgumentParser:
     common(w)
     w.add_argument("--space", help="JSON do espaço de busca")
     w.add_argument("--folds", type=int, default=4)
+    w.add_argument("--scheme", default="anchored",
+                   choices=["anchored", "rolling", "inner"])
     w.add_argument("--report")
     w.set_defaults(func=cmd_walkforward)
 
@@ -504,11 +569,26 @@ def build_parser() -> argparse.ArgumentParser:
     sc.add_argument("--folds", type=int, default=4)
     sc.add_argument("--gate", help="salvar veredito de liberação neste arquivo")
     sc.add_argument("--demo-days", type=int, help="dias já rodados em conta demo")
+    sc.add_argument("--scheme", default="anchored",
+                    choices=["anchored", "rolling", "inner"],
+                    help="anchored/rolling testam TODO o histórico após o 1º bloco")
     sc.add_argument("--with-governor", action="store_true",
                     help="manter o governador de drawdown ligado durante a pesquisa")
     sc.add_argument("--stress", action="store_true",
                     help="testar o melhor candidato com custos maiores e parâmetros vizinhos")
     sc.set_defaults(func=cmd_scan)
+
+    bs = sub.add_parser("basket", help="cesta de mercados com parâmetros pré-registrados")
+    bs.add_argument("-c", "--config", default="config/default.yaml")
+    bs.add_argument("--spec", default="config/basket.yaml", help="manifesto da cesta")
+    bs.add_argument("--risk", type=float, help="risco nominal por operação (%%)")
+    bs.add_argument("--target-dd", type=float,
+                    help="meta de drawdown da carteira (%%); 0 desliga o governador")
+    bs.add_argument("--stress", action="store_true",
+                    help="rodar estresse de custos e vizinhos de parâmetros")
+    bs.add_argument("--demo-days", type=int, help="dias já rodados em conta demo")
+    bs.add_argument("--gate", help="salvar o veredito neste arquivo")
+    bs.set_defaults(func=cmd_basket)
 
     g = sub.add_parser("gate", help="ver o veredito de liberação para o vivo")
     g.add_argument("arquivo", nargs="?", default="runs/gate.json")

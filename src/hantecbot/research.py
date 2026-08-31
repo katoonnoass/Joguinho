@@ -95,7 +95,8 @@ def _erfinv(x: float) -> float:
 
 def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
          strategies: Sequence[str], spaces: Dict[str, Dict[str, Sequence]], folds: int = 4,
-         specs: Optional[dict] = None, dd_governor: bool = False) -> List[ScanRow]:
+         specs: Optional[dict] = None, dd_governor: bool = False,
+         scheme: str = "anchored") -> List[ScanRow]:
     """Roda walk-forward para cada (ativo, timeframe, estratégia).
 
     `spaces` mapeia nome da estratégia -> espaço de busca (cada estratégia tem
@@ -131,7 +132,8 @@ def scan(datasets: Dict[Tuple[str, str], Sequence[Candle]], cfg_base: BotConfig,
             if not dd_governor:
                 cfg.risk.target_max_drawdown_pct = None
             try:
-                wf: WalkForwardResult = walk_forward(cfg, candles, space, folds=folds)
+                wf: WalkForwardResult = walk_forward(cfg, candles, space, folds=folds,
+                                                     scheme=scheme)
             except ValueError:
                 continue
             m: Metrics = wf.oos_metrics

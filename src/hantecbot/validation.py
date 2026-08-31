@@ -301,7 +301,9 @@ class PortfolioResult:
 
 
 def portfolio(series: Sequence[Tuple[str, Sequence[Trade]]], initial_balance: float = 10_000.0,
-              risk_per_trade_pct: float = 0.5) -> PortfolioResult:
+              risk_per_trade_pct: float = 0.5, target_dd_pct: Optional[float] = None,
+              dd_budget_fraction: float = 0.30,
+              periods_per_year: int = 252) -> PortfolioResult:
     """Combina as operações out-of-sample de várias séries num único capital.
 
     Cada operação é redimensionada para arriscar `risk_per_trade_pct` do equity
@@ -317,13 +319,21 @@ def portfolio(series: Sequence[Tuple[str, Sequence[Trade]]], initial_balance: fl
     eventos.sort(key=lambda e: e[0])
 
     equity = initial_balance
+    peak = initial_balance
     curve: List[tuple] = []
     synth: List[Trade] = []
     por_serie: Dict[str, Tuple[int, float]] = {}
     frac = risk_per_trade_pct / 100.0
     for when, nome, r in eventos:
-        pnl = equity * frac * r
+        f = frac
+        if target_dd_pct:
+            # mesmo orçamento fracionário do RiskManager, agora no nível da carteira
+            dd = max(0.0, (1.0 - equity / peak) * 100.0)
+            folga = max(0.0, target_dd_pct - dd)
+            f = min(frac, dd_budget_fraction * folga / 100.0)
+        pnl = equity * f * r
         equity += pnl
+        peak = max(peak, equity)
         curve.append((when, equity))
         synth.append(Trade(symbol=nome, side=Side.BUY, volume=0.0, entry_time=when,
                            entry_price=0.0, exit_time=when, exit_price=0.0, pnl=pnl,
@@ -331,7 +341,9 @@ def portfolio(series: Sequence[Tuple[str, Sequence[Trade]]], initial_balance: fl
         n, s = por_serie.get(nome, (0, 0.0))
         por_serie[nome] = (n + 1, s + r)
 
-    m = compute_metrics(synth, curve, initial_balance)
+    # a curva da carteira tem um ponto por OPERAÇÃO; anualizar como se fossem
+    # candles de 15 min produziria um Sharpe fantasioso
+    m = compute_metrics(synth, curve, initial_balance, periods_per_year=periods_per_year)
     rs = [t.r_multiple for t in synth]
     t_stat = 0.0
     if len(rs) >= 5 and pstdev(rs) > 0:

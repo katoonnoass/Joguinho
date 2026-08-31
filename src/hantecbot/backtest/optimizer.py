@@ -61,21 +61,49 @@ class WalkForwardResult:
 
 
 def walk_forward(cfg: BotConfig, candles: Sequence[Candle], space: Dict[str, Sequence[Any]],
-                 folds: int = 4, train_ratio: float = 0.7) -> WalkForwardResult:
+                 folds: int = 4, train_ratio: float = 0.7,
+                 scheme: str = "inner") -> WalkForwardResult:
+    """Validação walk-forward.
+
+    Três esquemas:
+
+    * ``inner``    — cada janela é dividida em treino/teste (comportamento
+      original). Simples, mas só ~30% do histórico vira out-of-sample.
+    * ``anchored`` — treino de 0 até o bloco k, teste no bloco k+1. O treino
+      cresce com o tempo (como na vida real) e **todo o histórico depois do
+      primeiro bloco é out-of-sample**: 3x mais amostra que o ``inner``.
+    * ``rolling``  — igual ao anchored, mas o treino é uma janela móvel do
+      mesmo tamanho de um bloco (adapta-se a mudanças de regime).
+
+    Amostra maior é a única forma honesta de aumentar o poder estatístico: não
+    muda o resultado, muda a certeza sobre ele.
+    """
     n = len(candles)
     if folds < 1 or n < 1000:
         raise ValueError("dados insuficientes para walk-forward")
     out = WalkForwardResult()
-    window = n // folds
     equity = cfg.initial_balance
     peak = cfg.initial_peak_equity or cfg.initial_balance
     curve: List[tuple] = []
     all_trades: List[Trade] = []
 
-    for f in range(folds):
-        seg = candles[f * window: (f + 1) * window]
-        cut = int(len(seg) * train_ratio)
-        train, test = seg[:cut], seg[cut:]
+    if scheme == "inner":
+        window = n // folds
+        segmentos = []
+        for f in range(folds):
+            seg = candles[f * window: (f + 1) * window]
+            cut = int(len(seg) * train_ratio)
+            segmentos.append((seg[:cut], seg[cut:]))
+    else:
+        block = n // (folds + 1)
+        segmentos = []
+        for f in range(1, folds + 1):
+            fim_treino = f * block
+            inicio = 0 if scheme == "anchored" else max(0, fim_treino - block)
+            segmentos.append((candles[inicio:fim_treino],
+                              candles[fim_treino: fim_treino + block]))
+
+    for train, test in segmentos:
         if len(train) < 300 or len(test) < 100:
             continue
         best = optimize(cfg, train, space)[0]
