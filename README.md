@@ -39,7 +39,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 122 testes
+make test             # 123 testes
 ```
 
 ## Uso em 4 passos
@@ -66,14 +66,19 @@ make test             # 122 testes
 BTCUSD com parâmetros **pré-registrados** em [`config/basket.yaml`](config/basket.yaml),
 26 anos de histórico:
 
-| operações | retorno (DD travado em 2%) | PF | DD | expectativa | t | p | DSR |
+| operações | retorno (DD travado em 1,25%) | PF | **DD** | expectativa | t | p | DSR |
 |---:|---:|---:|---:|---:|---:|---:|---:|
-| 488 | +15,61% | 1,45 | 1,97% | +0,146 R | +3,94 | 0,0002 | 0,996 |
+| 394 | +19,39% | 1,92 | **1,17%** | +0,239 R | +4,58 | <0,00001 | 0,998 |
 
 Passa **10 das 11 checagens** da trava de liberação. A única pendente é a que não
-se resolve com CPU: **60 dias em conta demo**. Detalhes, as 6 configurações
-testadas (todas publicadas), subperíodos e estresse de custos em
+se resolve com CPU: **60 dias em conta demo**. Detalhes, as **24 configurações
+testadas (todas publicadas)**, subperíodos e estresse de custos em
 [`docs/cesta-d1.md`](docs/cesta-d1.md).
+
+O drawdown caiu 41% (1,97% → 1,17%) e **nenhum outro indicador piorou** — PF
+1,45→1,92, expectativa +0,146→+0,239 R, t +3,94→+4,58, Calmar 7,9→16,5,
+anos positivos 19/26→21/26. Duas mudanças: **tirar o trailing stop** (que cortava
+as tendências longas) e apertar a meta de DD de 2,0% para 1,25%.
 
 ```bash
 hantecbot basket --stress --gate runs/gate.json
@@ -103,6 +108,11 @@ Em 4 anos e 7 meses de ouro (2022→2026): DD de **10,2% → 2,0%**, com profit 
 expectativa em R, Calmar e Sharpe iguais ou melhores. Detalhes, tabelas e os dois
 bugs de dimensionamento corrigidos no caminho em
 [`docs/drawdown-2pct.md`](docs/drawdown-2pct.md).
+
+A meta é um **botão**, não um dogma: a mesma cesta D1 entrega +7,4% com DD 0,47%,
++19,4% com DD 1,17% (o padrão hoje) ou +501% com DD 13,4% em 26 anos. O que o
+backtest estima é a razão retorno/risco (Calmar ~16); onde você quer ficar nessa
+reta é decisão sua — `hantecbot basket --target-dd 0.5`.
 
 ## Trava de liberação: o robô não vai ao vivo sem evidência
 
@@ -138,18 +148,18 @@ mas reduz a variância da que existir.
 Veredito atual da cesta D1 (`hantecbot basket --stress --gate runs/gate.json`):
 
 ```
-Configurações declaradas antes de olhar o resultado: 6
-t crítico com correção de múltiplos testes (Šidák): 2.63
-t observado: +3.94 → EVIDÊNCIA: além do que a sorte explica
+Configurações declaradas antes de olhar o resultado: 24
+t crítico com correção de múltiplos testes (Šidák): 3.07
+t observado: +4.58 → EVIDÊNCIA: além do que a sorte explica
 
-  [x] amostra                        488 trades (mín. 200)
-  [x] profit factor                  1.45 (mín. 1.2)
-  [x] drawdown máximo                1.97% (máx. 12%)
-  [x] expectativa por operação       +0.146 R (mín. 0.05)
-  [x] consistência anual             19/26 anos positivos (mín. 70%)
-  [x] significância corrigida        t=+3.94 (mín. 2.63 após 6 testes)
-  [x] bootstrap por blocos           p=0.00020 (máx. 0.00851 = alpha corrigido)
-  [x] deflated sharpe                DSR=0.996 (mín. 0.95)
+  [x] amostra                        394 trades (mín. 200)
+  [x] profit factor                  1.92 (mín. 1.2)
+  [x] drawdown máximo                1.17% (máx. 12%)
+  [x] expectativa por operação       +0.239 R (mín. 0.05)
+  [x] consistência anual             21/26 anos positivos (mín. 70%)
+  [x] significância corrigida        t=+4.58 (mín. 3.07 após 24 testes)
+  [x] bootstrap por blocos           p=0.00000 (máx. 0.00213 = alpha corrigido)
+  [x] deflated sharpe                DSR=0.998 (mín. 0.95)
   [x] resiste a custos maiores       sobrevive até ×3.0 (mín. ×1.5)
   [x] platô de parâmetros            100% dos vizinhos positivos (mín. 60%)
   [ ] dias em conta demo             não informado (mín. 60)

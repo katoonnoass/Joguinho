@@ -40,10 +40,12 @@ def test_spec_le_o_manifesto_do_repositorio():
     assert spec.tentativas >= 1
     assert spec.estrategia == "trend_atr"
     assert len(spec.mercados) >= 3
-    assert spec.meta_dd_pct == 2.0
+    assert 0 < spec.meta_dd_pct <= 2.0
     # o manifesto precisa declarar o número de tentativas — é ele que define a
     # barra de significância
     assert spec.parametros and "slow" in spec.parametros
+    # a gestão da posição também é pré-registrada
+    assert set(spec.gestao) >= {"parcial_em_r", "breakeven_em_r", "trailing_atr"}
 
 
 def test_spec_inexistente_falha_alto(cfg):
@@ -112,3 +114,14 @@ def test_subperiodos_particiona_por_ano(cfg, cesta):
     linhas = subperiodos(res, [(anos[0], meio), (meio + 1, anos[-1])])
     assert linhas
     assert sum(l["trades"] for l in linhas) <= res.carteira.trades
+
+
+def test_gestao_do_manifesto_chega_ao_backtest(cfg, tmp_path):
+    """O que está escrito em `gestao:` tem que virar configuração de execução."""
+    from hantecbot.basket import _cfg_for
+    spec = BasketSpec(gestao={"parcial_em_r": 1.0, "breakeven_em_r": 1.0,
+                              "trailing_atr": 0.0})
+    out = _cfg_for(cfg, spec, {"symbol": "XAUUSD", "csv": "x.csv"}, None)
+    assert out.execution.partial_take_at_r == 1.0
+    assert out.execution.breakeven_at_r == 1.0
+    assert out.execution.trail_atr_mult is None   # 0 = desligado, não 0 ATR

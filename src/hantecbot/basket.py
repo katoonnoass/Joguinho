@@ -41,6 +41,7 @@ class BasketSpec:
     tentativas: int = 3
     estrategia: str = "trend_atr"
     parametros: dict = field(default_factory=dict)
+    gestao: dict = field(default_factory=dict)
     mercados: List[dict] = field(default_factory=list)
     risco_pct: float = 2.0
     meta_dd_pct: Optional[float] = 2.0
@@ -58,6 +59,7 @@ class BasketSpec:
             nome=d.get("nome", "cesta"), tentativas=int(d.get("tentativas", 3)),
             estrategia=d.get("estrategia", "trend_atr"),
             parametros=d.get("parametros", {}) or {},
+            gestao=d.get("gestao", {}) or {},
             mercados=d.get("mercados", []) or [],
             risco_pct=float(c.get("risco_por_operacao_pct", 2.0)),
             meta_dd_pct=c.get("meta_drawdown_pct", 2.0),
@@ -148,6 +150,15 @@ def _cfg_for(base: BotConfig, spec: BasketSpec, mercado: dict,
         for k, v in overrides.items():
             setattr(cfg.risk, k, v)
     cfg.risk.trading_hours_utc = list(range(24))
+    # a gestão da posição faz parte do manifesto: quem lê o YAML sabe
+    # exatamente como o trade é conduzido depois da entrada
+    g = spec.gestao or {}
+    if "parcial_em_r" in g:
+        cfg.execution.partial_take_at_r = g["parcial_em_r"] or None
+    if "breakeven_em_r" in g:
+        cfg.execution.breakeven_at_r = g["breakeven_em_r"] or None
+    if "trailing_atr" in g:
+        cfg.execution.trail_atr_mult = g["trailing_atr"] or None
     # o dimensionamento da carteira é feito depois, sobre os R-múltiplos:
     # cada mercado roda com risco constante para medir o edge sem censura
     cfg.risk.target_max_drawdown_pct = None

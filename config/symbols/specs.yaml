@@ -103,3 +103,380 @@ BTCUSD:
   commission_per_lot: 0.0
   swap_long_per_lot: -30.0
   swap_short_per_lot: -30.0
+
+# ---------------------------------------------------------------------------
+# Cesta ampla (D1): 17 pares de FX. Spreads/swaps deliberadamente pessimistas
+# (pior que a tabela típica da Hantec) — se o edge só existe com custo baixo,
+# ele não existe. Pares cruzados liquidam em moeda diferente de USD; isso NÃO
+# afeta o R-múltiplo (risco e resultado sofrem a mesma conversão), só o valor
+# em dólar de cada operação isolada.
+
+AUDUSD:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: AUDUSD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+GBPUSD:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: GBPUSD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+NZDUSD:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: NZDUSD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+USDCAD:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: USDCAD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+USDCHF:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: USDCHF
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+USDJPY:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 50
+  symbol: USDJPY
+  digits: 3
+  point: 0.001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 12
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+AUDCHF:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: AUDCHF
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURAUD:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURAUD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURCAD:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURCAD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURCHF:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURCHF
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURGBP:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURGBP
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURJPY:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURJPY
+  digits: 3
+  point: 0.001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+EURNZD:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: EURNZD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+GBPAUD:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: GBPAUD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+GBPCAD:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: GBPCAD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+GBPCHF:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: GBPCHF
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+GBPJPY:
+  risk_overrides:
+    max_spread_points: 55
+    min_stop_points: 50
+  symbol: GBPJPY
+  digits: 3
+  point: 0.001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 22
+  commission_per_lot: 3.5
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -4.0
+
+# ---------------------------------------------------------------------------
+# Classes que faltavam na cesta: prata, petróleo e mais três índices.
+XAGUSD:
+  risk_overrides:
+    max_spread_points: 80
+    min_stop_points: 100
+  symbol: XAGUSD
+  digits: 3
+  point: 0.001
+  contract_size: 5000
+  volume_min: 0.01
+  volume_max: 20.0
+  volume_step: 0.01
+  spread_points: 35
+  commission_per_lot: 5.0
+  swap_long_per_lot: -8.0
+  swap_short_per_lot: -3.0
+
+BRENT:
+  risk_overrides:
+    max_spread_points: 20
+    min_stop_points: 30
+  symbol: BRENT
+  digits: 2
+  point: 0.01
+  contract_size: 100
+  volume_min: 0.1
+  volume_max: 50.0
+  volume_step: 0.1
+  spread_points: 8
+  commission_per_lot: 0.0
+  swap_long_per_lot: -3.0
+  swap_short_per_lot: -3.0
+
+DAX40:
+  risk_overrides:
+    max_spread_points: 60
+    min_stop_points: 300
+  symbol: DAX40
+  digits: 1
+  point: 0.1
+  contract_size: 1
+  volume_min: 0.1
+  volume_max: 100.0
+  volume_step: 0.1
+  spread_points: 20
+  commission_per_lot: 0.0
+  swap_long_per_lot: -3.0
+  swap_short_per_lot: -1.0
+
+US30:
+  risk_overrides:
+    max_spread_points: 80
+    min_stop_points: 500
+  symbol: US30
+  digits: 1
+  point: 0.1
+  contract_size: 1
+  volume_min: 0.1
+  volume_max: 100.0
+  volume_step: 0.1
+  spread_points: 35
+  commission_per_lot: 0.0
+  swap_long_per_lot: -4.0
+  swap_short_per_lot: -1.5
+
+NAS100:
+  risk_overrides:
+    max_spread_points: 80
+    min_stop_points: 300
+  symbol: NAS100
+  digits: 1
+  point: 0.1
+  contract_size: 1
+  volume_min: 0.1
+  volume_max: 100.0
+  volume_step: 0.1
+  spread_points: 25
+  commission_per_lot: 0.0
+  swap_long_per_lot: -3.5
+  swap_short_per_lot: -1.2
+
+UK100:
+  risk_overrides:
+    max_spread_points: 60
+    min_stop_points: 200
+  symbol: UK100
+  digits: 1
+  point: 0.1
+  contract_size: 1
+  volume_min: 0.1
+  volume_max: 100.0
+  volume_step: 0.1
+  spread_points: 18
+  commission_per_lot: 0.0
+  swap_long_per_lot: -2.5
+  swap_short_per_lot: -1.0
