@@ -83,3 +83,38 @@ def split(candles: Sequence[Candle], ratio: float = 0.7):
     """Divide em treino/teste preservando a ordem temporal."""
     k = int(len(candles) * ratio)
     return list(candles[:k]), list(candles[k:])
+
+
+def resample(candles: Sequence[Candle], source_tf: str, target_tf: str) -> List[Candle]:
+    """Agrega candles para um timeframe maior (M15 -> H1, H4, D1...).
+
+    Alinha os blocos ao relógio (uma H4 começa em 00:00, 04:00, ...), como faz
+    o MT5 — agrupar de N em N candles produziria barras deslocadas.
+    """
+    src, dst = timeframe_minutes(source_tf), timeframe_minutes(target_tf)
+    if dst % src != 0 or dst < src:
+        raise ValueError(f"{target_tf} não é múltiplo de {source_tf}")
+    if dst == src:
+        return list(candles)
+    out: List[Candle] = []
+    bucket: List[Candle] = []
+    key = None
+    for c in candles:
+        minutes = c.time.hour * 60 + c.time.minute
+        k = (c.time.date(), minutes // dst)
+        if key is None:
+            key = k
+        if k != key and bucket:
+            out.append(_merge(bucket))
+            bucket = []
+            key = k
+        bucket.append(c)
+    if bucket:
+        out.append(_merge(bucket))
+    return out
+
+
+def _merge(group: Sequence[Candle]) -> Candle:
+    return Candle(time=group[0].time, open=group[0].open,
+                  high=max(c.high for c in group), low=min(c.low for c in group),
+                  close=group[-1].close, volume=sum(c.volume for c in group))

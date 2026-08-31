@@ -143,6 +143,8 @@ class PaperBroker(Broker):
         price = self.spec.round_price(self._exit_price(p.side, ref))
         gross = (price - p.entry_price) * p.side.sign * vol * self.spec.contract_size
         fees = self.spec.commission_per_lot * vol
+        spread_cost = (self.spec.spread_points * self.spec.point
+                       * self.spec.contract_size * vol)   # meia ida + meia volta
         pnl = gross - fees
         self.balance += pnl
         exit_time = when or self._now or self._candles[-1].time
@@ -151,7 +153,8 @@ class PaperBroker(Broker):
         trade = Trade(
             symbol=p.symbol, side=p.side, volume=vol, entry_time=p.opened_at,
             entry_price=p.entry_price, exit_time=exit_time, exit_price=price,
-            pnl=pnl, fees=fees, reason_in=p.reason, reason_out=reason,
+            pnl=pnl, fees=fees, spread_cost=spread_cost,
+            reason_in=p.reason, reason_out=reason,
             equity_after=self.balance, r_multiple=r,
         )
         self._trades.append(trade)

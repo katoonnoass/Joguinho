@@ -19,5 +19,8 @@ challenge:
 	.venv/bin/hantecbot challenge --plano double_stage --csv data/synthetic_M15.csv \
 		--balance 100000 --montecarlo --report reports/homologacao.html
 
+import-real:
+	.venv/bin/python tools/import_csv.py data/EURUSD_M15_raw.csv data/EURUSD_M15.csv --timeframe M15
+
 clean:
 	rm -rf .pytest_cache **/__pycache__ reports runs

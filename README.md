@@ -136,6 +136,24 @@ hantecbot live -c config/default.yaml --live   # conta real: exige confirmação
 
 Credenciais **nunca** vão para o YAML nem para o Git — só variáveis de ambiente.
 
+## Resultado com dados reais (leia antes de sonhar)
+
+Rodamos 8 anos de EUR/USD M15 real (195.576 candles, 2012-2020):
+
+| TF | trades | retorno | PF | custos pagos | **bruto antes de custos** |
+|---:|---:|---:|---:|---:|---:|
+| M15 | 4.285 | -94,2% | 0,72 | 3.491 | -5.933 |
+| H1 | 1.238 | -14,4% | 0,94 | 1.462 | **+22** |
+| H4 | 391 | -8,4% | 0,89 | 230 | -612 |
+| D1 | 59 | +1,8% | 1,19 | 12 | +188 |
+
+Walk-forward out-of-sample: **-11,9% em H1 e -1,8% em H4**. Homologação Double Stage:
+pior dia -1,05% (limite -5%), nenhuma violação, mas **P(aprovar) = 0%**.
+
+Ou seja: a infraestrutura de risco funciona, a **vantagem estatística não existe** na
+configuração padrão — em H1 o prejuízo é literalmente só custo de transação. Relatório
+completo, diagnóstico e próximos passos em [`docs/backtest-eurusd.md`](docs/backtest-eurusd.md).
+
 ## Como usar dados reais da Hantec
 
 No terminal MT5: `Ferramentas → Centro de Cotações` (baixe o histórico do símbolo),

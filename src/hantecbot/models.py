@@ -87,7 +87,8 @@ class Trade:
     exit_time: datetime
     exit_price: float
     pnl: float
-    fees: float = 0.0
+    fees: float = 0.0          # comissão
+    spread_cost: float = 0.0   # custo embutido do spread (ida + volta)
     reason_in: str = ""
     reason_out: str = ""
     equity_after: float = 0.0
@@ -108,6 +109,7 @@ class Trade:
             "exit_price": round(self.exit_price, 6),
             "pnl": round(self.pnl, 2),
             "fees": round(self.fees, 2),
+            "spread_cost": round(self.spread_cost, 2),
             "r_multiple": round(self.r_multiple, 3),
             "reason_in": self.reason_in,
             "reason_out": self.reason_out,

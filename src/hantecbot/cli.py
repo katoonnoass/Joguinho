@@ -21,7 +21,7 @@ from .backtest.challenge import ChallengeReport, monte_carlo, run_challenge
 from .backtest.engine import Backtester
 from .backtest.optimizer import optimize, walk_forward
 from .config import BotConfig, load_prop_rules
-from .data import generate, load_csv, save_csv
+from .data import generate, load_csv, resample, save_csv
 from .journal import Journal
 from .models import Candle
 from .report import write_report
@@ -47,11 +47,19 @@ def _load_cfg(path: Optional[str]) -> BotConfig:
     return BotConfig()
 
 
-def _candles(args) -> List[Candle]:
+def _candles(args, cfg: Optional[BotConfig] = None) -> List[Candle]:
     if getattr(args, "csv", None):
         c = load_csv(args.csv, limit=getattr(args, "limit", None))
         if not c:
             raise SystemExit(f"nenhum candle lido de {args.csv}")
+        tf = getattr(args, "resample", None)
+        if tf:
+            src = getattr(args, "source_tf", "M15")
+            n0 = len(c)
+            c = resample(c, src, tf)
+            print(f"• reamostrado {src} → {tf}: {n0} → {len(c)} candles")
+            if cfg is not None:
+                cfg.timeframe = tf
         return c
     print("• nenhum CSV informado — usando série sintética (apenas demonstração)")
     return generate(bars=getattr(args, "bars", 20000), timeframe="M15",
@@ -74,7 +82,7 @@ def cmd_backtest(args) -> int:
         cfg.strategy.params.update(json.loads(args.params))
     if args.balance:
         cfg.initial_balance = args.balance
-    candles = _candles(args)
+    candles = _candles(args, cfg)
     res = Backtester(cfg).run(candles)
 
     print(f"\nEstratégia: {cfg.strategy.name}  |  {cfg.symbol.symbol} {cfg.timeframe}  "
@@ -119,7 +127,7 @@ def cmd_challenge(args) -> int:
 
     paths = PLANOS.get(args.plano, [args.plano])
     rules = [load_prop_rules(p) for p in paths]
-    candles = _candles(args)
+    candles = _candles(args, cfg)
 
     print(f"\nPlano: {args.plano}  |  {len(rules)} fase(s)  |  saldo inicial "
           f"{cfg.initial_balance:,.2f}")
@@ -182,7 +190,7 @@ def cmd_optimize(args) -> int:
     cfg = _load_cfg(args.config)
     if args.strategy:
         cfg.strategy.name = args.strategy
-    candles = _candles(args)
+    candles = _candles(args, cfg)
     cut = int(len(candles) * 0.7)
     train = candles[:cut]
     space = _space(args, cfg)
@@ -208,7 +216,7 @@ def cmd_walkforward(args) -> int:
     cfg = _load_cfg(args.config)
     if args.strategy:
         cfg.strategy.name = args.strategy
-    candles = _candles(args)
+    candles = _candles(args, cfg)
     wf = walk_forward(cfg, candles, _space(args, cfg), folds=args.folds)
     print(wf.render())
     if args.report:
@@ -302,6 +310,8 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--limit", type=int, help="usar apenas os N candles finais")
         sp.add_argument("--seed", type=int, default=42)
         sp.add_argument("--strategy", choices=["trend_atr", "mean_reversion"])
+        sp.add_argument("--resample", help="agregar para outro timeframe (H1, H4, D1...)")
+        sp.add_argument("--source-tf", default="M15", help="timeframe do CSV de origem")
 
     d = sub.add_parser("demo-data", help="gerar CSV sintético")
     d.add_argument("--out", default="data/synthetic_M15.csv")

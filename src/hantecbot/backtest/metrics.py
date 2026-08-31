@@ -29,6 +29,10 @@ class Metrics:
     longest_losing_streak: int = 0
     exposure_pct: float = 0.0
     final_equity: float = 0.0
+    total_fees: float = 0.0
+    total_spread: float = 0.0
+    gross_profit: float = 0.0
+    cost_drag_pct: float = 0.0     # custos como % do |lucro bruto|
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -43,6 +47,9 @@ class Metrics:
             ("Expectativa", f"{self.expectancy_r:+.3f} R por trade"),
             ("Ganho médio", f"{self.avg_win:,.2f}"),
             ("Perda média", f"{self.avg_loss:,.2f}"),
+            ("Custos", f"{self.total_fees + self.total_spread:,.2f} "
+                       f"(comissão {self.total_fees:,.2f} + spread {self.total_spread:,.2f})"),
+            ("Bruto antes de custos", f"{self.gross_profit:,.2f}"),
             ("Drawdown máx.", f"{self.max_drawdown_pct:.2f}%  ({self.max_drawdown_abs:,.2f})"),
             ("Sharpe / Sortino", f"{self.sharpe:.2f} / {self.sortino:.2f}"),
             ("Calmar", f"{self.calmar:.2f}"),
@@ -70,6 +77,11 @@ def compute_metrics(trades: Sequence[Trade], equity_curve: Sequence[Tuple],
     gross_win, gross_loss = sum(wins), abs(sum(losses))
     m.profit_factor = (gross_win / gross_loss) if gross_loss > 0 else (float("inf") if gross_win else 0.0)
     m.expectancy_r = mean([t.r_multiple for t in trades]) if trades else 0.0
+    m.total_fees = sum(t.fees for t in trades)
+    m.total_spread = sum(t.spread_cost for t in trades)
+    m.gross_profit = m.net_profit + m.total_fees + m.total_spread
+    denom = abs(m.gross_profit) or 1.0
+    m.cost_drag_pct = 100.0 * (m.total_fees + m.total_spread) / denom
 
     # drawdown sobre a curva de equity
     peak, max_dd, max_dd_abs = equities[0], 0.0, 0.0
