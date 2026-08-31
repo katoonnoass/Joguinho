@@ -1,0 +1,53 @@
+# Configuração padrão do hantecbot.
+# Credenciais NÃO ficam aqui — use variáveis de ambiente:
+#   HANTEC_LOGIN, HANTEC_PASSWORD, HANTEC_SERVER (ex.: HantecMarkets-Demo)
+
+timeframe: M15
+initial_balance: 10000
+magic: 990045
+poll_seconds: 5
+
+symbol:
+  symbol: EURUSD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 8          # spread típico da Hantec em EURUSD (points)
+  commission_per_lot: 3.5   # round-turn, conta Raw/ECN
+  swap_long_per_lot: -3.0
+  swap_short_per_lot: 0.5
+
+strategy:
+  name: trend_atr
+  params:
+    fast: 21
+    slow: 55
+    breakout: 20
+    atr_period: 14
+    atr_stop_mult: 2.0
+    reward_r: 3.0
+    adx_min: 20
+    allow_short: true
+
+risk:
+  risk_per_trade_pct: 0.5     # 0,5% do equity por operação
+  max_daily_loss_pct: 2.0     # para o dia após -2%
+  max_drawdown_pct: 10.0      # desliga o robô após -10% do pico
+  max_open_positions: 1
+  max_consecutive_losses: 5
+  max_lot: 5.0
+  max_spread_points: 25
+  min_stop_points: 50
+  trading_hours_utc: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  weekdays: [0, 1, 2, 3, 4]
+  reduce_risk_after_loss: true
+
+execution:
+  slippage_points: 3
+  fill_on_next_open: true
+  partial_take_at_r: 1.0
+  breakeven_at_r: 1.0
+  trail_atr_mult: 2.5

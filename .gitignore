@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Dados e saídas do bot
+data/*.csv
+!data/.gitkeep
+runs/
+reports/
+logs/
+*.log
+*.jsonl
+
+# Segredos (NUNCA commitar credenciais da corretora)
+.env
+secrets.yaml
+config/*.local.yaml
