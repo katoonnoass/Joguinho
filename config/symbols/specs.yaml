@@ -1,0 +1,53 @@
+# Especificações por instrumento (confira no seu terminal MT5: clique direito no
+# símbolo -> Especificação). Números errados aqui = backtest mentiroso.
+# Valores conservadores/pessimistas de propósito.
+
+# `risk_overrides` ajusta os filtros do RiskManager ao instrumento: o que é
+# spread alargado no EURUSD é spread normal no ouro.
+EURUSD:
+  risk_overrides:
+    max_spread_points: 25
+    min_stop_points: 50
+  symbol: EURUSD
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 8          # 0,8 pip
+  commission_per_lot: 3.5
+  swap_long_per_lot: -3.0
+  swap_short_per_lot: 0.5
+
+USDCHF:
+  risk_overrides:
+    max_spread_points: 35
+    min_stop_points: 60
+  symbol: USDCHF
+  digits: 5
+  point: 0.00001
+  contract_size: 100000
+  volume_min: 0.01
+  volume_max: 50.0
+  volume_step: 0.01
+  spread_points: 15
+  commission_per_lot: 3.5
+  swap_long_per_lot: 1.0
+  swap_short_per_lot: -5.0
+
+XAUUSD:
+  risk_overrides:
+    max_spread_points: 60      # ouro tem spread naturalmente maior
+    min_stop_points: 150       # US$ 1,50
+  symbol: XAUUSD
+  digits: 2
+  point: 0.01
+  contract_size: 100         # 1 lote = 100 onças
+  volume_min: 0.01
+  volume_max: 20.0
+  volume_step: 0.01
+  spread_points: 30          # US$ 0,30 por onça
+  commission_per_lot: 5.0
+  swap_long_per_lot: -12.0
+  swap_short_per_lot: 4.0

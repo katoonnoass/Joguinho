@@ -29,6 +29,7 @@ ao vivo (demo por padrão).
 | `hantecbot/report.py` | relatório HTML autocontido com curva de equity em SVG |
 | `hantecbot/prop.py` | **conformidade com mesa proprietária**: pisos diário/total, risco máximo, dias lucrativos, consistência, inatividade |
 | `hantecbot/backtest/challenge.py` | simula a homologação (fases encadeadas) e estima **P(aprovar)** por Monte Carlo |
+| `hantecbot/research.py` | varredura multi-ativo, correção de múltiplos testes e **trava de liberação** para o vivo |
 
 Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
@@ -36,7 +37,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 60 testes
+make test             # 74 testes
 ```
 
 ## Uso em 4 passos
@@ -55,6 +56,40 @@ make test             # 60 testes
 # 4. replay em modo paper (gera diário de operações em runs/)
 .venv/bin/hantecbot paper --csv data/synthetic_M15.csv
 ```
+
+## Trava de liberação: o robô não vai ao vivo sem evidência
+
+A perda mais cara não vem do mercado, vem de operar sem vantagem comprovada.
+Por isso `hantecbot live` **recusa** rodar sem um veredito aprovado:
+
+```bash
+hantecbot scan --data XAUUSD:data/XAUUSD_M15.csv:M15:H1,H4 \
+                     EURUSD:data/EURUSD_H1.csv:H1:H1,H4 \
+    --strategies trend_atr,mean_reversion --folds 4 --gate runs/gate.json
+hantecbot gate            # ver o veredito
+hantecbot live --plano double_stage   # bloqueado até o veredito ser aprovado
+```
+
+O scan roda walk-forward em cada (ativo, timeframe, estratégia) e — o detalhe que
+quase ninguém aplica — **corrige a significância pelo número de combinações testadas**
+(Šidák): testar 3.456 configurações produz "vencedoras" por puro acaso.
+
+```
+Combinações testadas no total: 3456
+t crítico com correção de múltiplos testes: 4.32
+Melhor t observado: +1.02 → NÃO É EVIDÊNCIA: dentro do que a sorte explica
+
+  [ ] amostra out-of-sample        8 trades (mín. 200)
+  [x] profit factor OOS            2.83 (mín. 1.2)
+  [ ] significância corrigida      t=+1.02 (mín. 4.32 após 3456 testes)
+  [ ] dias em conta demo           não informado (mín. 60)
+🚫 BLOQUEADO — não pague desafio nem ligue conta real ainda
+```
+
+Melhor candidato encontrado até agora: **XAU/USD H4** (PF 2,46, 4/4 janelas positivas,
+DD 1,27%) — ainda assim **reprovado** por amostra pequena (32 trades). Detalhes,
+tabela completa e o caminho para virar o jogo em
+[`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md).
 
 ## Mesa proprietária (Fimathe) — homologação do EA
 

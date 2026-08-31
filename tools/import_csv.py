@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from hantecbot.data.loader import TIMEFRAMES, save_csv  # noqa: E402
 from hantecbot.models import Candle  # noqa: E402
 
-FORMATS = ["%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y.%m.%d %H:%M:%S", "%Y.%m.%d %H:%M",
+FORMATS = ["%Y.%m.%d %H:%M:%S", "%Y.%m.%d %H:%M", "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M",
            "%m/%d/%Y %H:%M", "%d/%m/%Y %H:%M", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"]
 
 
@@ -38,12 +38,41 @@ def parse_time(raw: str) -> datetime:
     raise ValueError(f"data não reconhecida: {raw!r}")
 
 
+def _looks_like_header(line: str) -> bool:
+    low = line.lower()
+    return any(k in low for k in ("open", "close", "date", "time")) and not line[:4].isdigit()
+
+
+def load_headerless(path: str, delim: str) -> list[Candle]:
+    """Export cru do MT5: DATA,HORA,O,H,L,C,VOL (sem cabeçalho)."""
+    out: list[Candle] = []
+    with open(path, "r", encoding="utf-8-sig", newline="") as fh:
+        for row in csv.reader(fh, delimiter=delim):
+            try:
+                if len(row) >= 7:                      # data e hora separadas
+                    t = parse_time(f"{row[0]} {row[1]}")
+                    o, h, l, c, v = row[2], row[3], row[4], row[5], row[6]
+                elif len(row) == 6:                    # datahora única
+                    t = parse_time(row[0])
+                    o, h, l, c, v = row[1], row[2], row[3], row[4], row[5]
+                else:
+                    continue
+                out.append(Candle(time=t, open=float(o), high=float(h), low=float(l),
+                                  close=float(c), volume=float(v or 0)))
+            except (ValueError, IndexError):
+                continue
+    out.sort(key=lambda c: c.time)
+    return out
+
+
 def load_any(path: str) -> list[Candle]:
     out: list[Candle] = []
     with open(path, "r", encoding="utf-8-sig", newline="") as fh:
         head = fh.readline()
         fh.seek(0)
         delim = "\t" if "\t" in head else (";" if head.count(";") > head.count(",") else ",")
+        if not _looks_like_header(head):
+            return load_headerless(path, delim)
         reader = csv.DictReader(fh, delimiter=delim)
         cols = {c.lower().strip().lstrip("<").rstrip(">"): c for c in (reader.fieldnames or [])}
         tcol = cols.get("time") or cols.get("date") or cols.get("datetime") or cols.get("timestamp")

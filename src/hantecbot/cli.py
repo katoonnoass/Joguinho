@@ -23,6 +23,7 @@ from .backtest.optimizer import optimize, walk_forward
 from .config import BotConfig, load_prop_rules
 from .data import generate, load_csv, resample, save_csv
 from .journal import Journal
+from .research import (GateCriteria, GateResult, evaluate_gate, render_scan, scan)
 from .models import Candle
 from .report import write_report
 
@@ -102,6 +103,82 @@ def cmd_backtest(args) -> int:
         print(f"\n✓ relatório HTML: {path}")
     print(DISCLAIMER)
     return 0
+
+
+def _load_specs() -> dict:
+    import yaml
+    path = "config/symbols/specs.yaml"
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return yaml.safe_load(fh) or {}
+
+
+SCAN_SPACES = {
+    "trend_atr": {"fast": [13, 21, 34], "slow": [55, 89], "breakout": [20, 40],
+                  "atr_stop_mult": [1.5, 2.5], "reward_r": [2.0, 3.0]},
+    # mais frouxo que o padrão: com os filtros originais a estratégia quase não opera
+    "mean_reversion": {"ma_period": [20, 50], "band_mult": [1.5, 2.0, 2.5],
+                       "rsi_buy": [25.0, 32.0], "rsi_sell": [68.0, 75.0],
+                       "atr_stop_mult": [1.0, 2.0], "adx_max": [22.0, 30.0],
+                       "trend_filter": [100]},
+}
+
+
+def cmd_scan(args) -> int:
+    """Procura vantagem estatística em vários ativos/timeframes — e desconta o viés."""
+    from .data import load_csv, resample
+
+    cfg = _load_cfg(args.config)
+    specs = _load_specs()
+    datasets = {}
+    for item in args.data:
+        # formato: SIMBOLO:arquivo.csv:TF_ORIGEM[:TF1,TF2,...]
+        parts = item.split(":")
+        if len(parts) < 3:
+            raise SystemExit(f"--data espera SIMBOLO:arquivo:TF_ORIGEM[:TFs], recebi {item!r}")
+        symbol, path, src_tf = parts[0], parts[1], parts[2]
+        targets = parts[3].split(",") if len(parts) > 3 else [src_tf]
+        base = load_csv(path)
+        if not base:
+            raise SystemExit(f"nenhum candle em {path}")
+        for tf in targets:
+            candles = base if tf == src_tf else resample(base, src_tf, tf)
+            datasets[(symbol, tf)] = candles
+            print(f"• {symbol} {tf}: {len(candles)} candles "
+                  f"({candles[0].time:%Y-%m-%d} → {candles[-1].time:%Y-%m-%d})")
+
+    strategies = args.strategies.split(",")
+    spaces = json.loads(args.space) if args.space else SCAN_SPACES
+    if spaces and not isinstance(next(iter(spaces.values())), dict):
+        spaces = {st: spaces for st in strategies}    # um espaço único para todas
+    print(f"\nRodando walk-forward ({args.folds} janelas) em {len(datasets)} séries × "
+          f"{len(strategies)} estratégias...\n")
+    rows = scan(datasets, cfg, strategies, spaces, folds=args.folds, specs=specs)
+    print(render_scan(rows))
+
+    if rows and args.gate:
+        gate = evaluate_gate(rows[0], GateCriteria(),
+                             demo_days=args.demo_days,
+                             combos_tested=sum(r.combos_tested for r in rows))
+        print("\n" + gate.render())
+        path = gate.save(args.gate)
+        print(f"\n✓ veredito salvo em {path} (o comando `live` exige este arquivo)")
+    print(DISCLAIMER)
+    return 0
+
+
+def cmd_gate(args) -> int:
+    """Mostra o veredito de liberação salvo."""
+    g = GateResult.load(args.arquivo)
+    if g is None:
+        print(f"nenhum veredito em {args.arquivo}. Rode `hantecbot scan --gate {args.arquivo}`.")
+        return 1
+    print(g.render())
+    print(f"\ngerado em: {g.gerado_em}")
+    print(f"contexto : {json.dumps(g.contexto.get('symbol', ''))} "
+          f"{g.contexto.get('timeframe', '')} {g.contexto.get('strategy', '')}")
+    return 0 if g.aprovado else 1
 
 
 PLANOS = {
@@ -266,6 +343,19 @@ def cmd_paper(args) -> int:
 
 def cmd_live(args) -> int:
     cfg = _load_cfg(args.config)
+    gate = GateResult.load(args.gate_file)
+    if gate is None or not gate.aprovado:
+        print("🚫 Operação ao vivo bloqueada: não há veredito de liberação aprovado em "
+              f"{args.gate_file}.")
+        if gate is not None:
+            print()
+            print(gate.render())
+        print("\nGere evidência primeiro:\n"
+              "  hantecbot scan --data SIMBOLO:arquivo.csv:TF --gate runs/gate.json\n"
+              "Rodar sem vantagem comprovada é a forma mais cara de descobrir que ela não existe.")
+        if not args.force:
+            return 2
+        print("\n⚠  --force usado: seguindo mesmo sem liberação. A responsabilidade é sua.")
     if getattr(args, "plano", None):
         paths = PLANOS.get(args.plano, [args.plano])
         cfg.prop = load_prop_rules(paths[0])
@@ -345,6 +435,22 @@ def build_parser() -> argparse.ArgumentParser:
     pa.add_argument("--out-dir", default="runs")
     pa.set_defaults(func=cmd_paper)
 
+    sc = sub.add_parser("scan", help="procurar vantagem em vários ativos (walk-forward)")
+    sc.add_argument("-c", "--config", default="config/default.yaml")
+    sc.add_argument("--data", nargs="+", required=True,
+                    metavar="SIMBOLO:arquivo.csv:TF[:TFs]",
+                    help="ex.: EURUSD:data/EURUSD_H1.csv:H1:H1,H4")
+    sc.add_argument("--strategies", default="trend_atr,mean_reversion")
+    sc.add_argument("--space", help="JSON do espaço de busca")
+    sc.add_argument("--folds", type=int, default=4)
+    sc.add_argument("--gate", help="salvar veredito de liberação neste arquivo")
+    sc.add_argument("--demo-days", type=int, help="dias já rodados em conta demo")
+    sc.set_defaults(func=cmd_scan)
+
+    g = sub.add_parser("gate", help="ver o veredito de liberação para o vivo")
+    g.add_argument("arquivo", nargs="?", default="runs/gate.json")
+    g.set_defaults(func=cmd_gate)
+
     ch = sub.add_parser("challenge", help="simular a homologação numa mesa proprietária")
     common(ch)
     ch.add_argument("--plano", default="double_stage",
@@ -363,6 +469,10 @@ def build_parser() -> argparse.ArgumentParser:
     l.add_argument("--live", action="store_true", help="autorizar conta REAL")
     l.add_argument("--out-dir", default="runs")
     l.add_argument("--plano", help="aplicar regras de mesa ao vivo (ex.: double_stage)")
+    l.add_argument("--gate-file", default="runs/gate.json",
+                   help="veredito de liberação exigido para operar")
+    l.add_argument("--force", action="store_true",
+                   help="ignorar a trava de liberação (não recomendado)")
     l.set_defaults(func=cmd_live)
     return p
 
