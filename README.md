@@ -113,7 +113,7 @@ src/hantecbot/
   broker/{base,paper,mt5}.py
   backtest/{engine,metrics,optimizer}.py
   live/runner.py
-config/default.yaml   tests/   Makefile
+config/default.yaml   tests/   Makefile   ci/github-actions-ci.yml
 ```
 
 ## Roadmap
