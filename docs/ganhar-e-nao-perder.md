@@ -121,6 +121,10 @@ ajuste fino de parâmetros. Ele reprova apenas onde mais importa — **amostra**
 (32 operações), p do bootstrap (0,0015 contra 0,00001 exigido após 4.032 testes) e
 DSR (0,307 contra 0,95).
 
+> ⚠ **Este candidato foi reprovado depois.** Testado em 2024→2026 (dados que ele
+> nunca viu) devolveu −1,10%, PF 0,96 — ver
+> [`backtest-xauusd-2024-2026.md`](backtest-xauusd-2024-2026.md). O gate estava certo.
+
 **Ouro em H4 é o único candidato interessante**: positivo nas 4 janelas, PF 2,46,
 drawdown de 1,27%. E mesmo assim está **reprovado**: 32 operações é amostra pequena
 e t=2,23 não vence o limiar corrigido de 4,36.

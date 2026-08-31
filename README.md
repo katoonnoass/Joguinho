@@ -105,11 +105,17 @@ Melhor t observado: +2.23 → NÃO É EVIDÊNCIA: dentro do que a sorte explica
 🚫 BLOQUEADO — não pague desafio nem ligue conta real ainda
 ```
 
+> **Atualização (ago/2026):** esse candidato foi testado em dados de 2024→2026 que
+> ele nunca tinha visto e **falhou** (−1,10%, PF 0,96). A trava fez seu trabalho.
+> Ver [`docs/backtest-xauusd-2024-2026.md`](docs/backtest-xauusd-2024-2026.md).
+
 Melhor candidato encontrado até agora: **XAU/USD H4** (PF 2,46, 4/4 janelas
 positivas, DD 1,27%, sobrevive a 2× os custos, 6/6 vizinhos positivos) — ainda
 assim **reprovado**: 32 trades não provam nada. Detalhes, tabela completa e o
 caminho para virar o jogo em
-[`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md).
+[`docs/ganhar-e-nao-perder.md`](docs/ganhar-e-nao-perder.md); o teste em dados de
+2024→2026 (ouro M1 do feed cTrader, spread real medido) em
+[`docs/backtest-xauusd-2024-2026.md`](docs/backtest-xauusd-2024-2026.md).
 
 ## Mesa proprietária (Fimathe) — homologação do EA
 
