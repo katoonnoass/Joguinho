@@ -1,0 +1,29 @@
+# Fimathe Prop — DOUBLE STAGE, Etapa 1
+# Fonte: PDF oficial Mar/2026 (ver campo `fonte`). Reconfira antes de usar.
+name: fimathe_double_stage_e1
+fonte: https://fimatheprop.com/wp-content/uploads/2026/04/Regras-Oficiais-da-Fimathe-Prop_Mar2026-2.pdf
+verificado_em: "2026-08-31"
+
+profit_target_pct: 10.0
+min_profit_days: 3            # 3 dias lucrativos...
+min_profit_day_pct: 0.5       # ...com crescimento >= 0,5% do saldo inicial
+
+daily_loss_pct: 5.0
+daily_baseline: max_balance_equity_prev_close
+
+total_loss_pct: 10.0
+total_loss_mode: static       # 10% ESTÁTICO abaixo do saldo inicial
+
+max_risk_pct: null
+max_inactivity_days: 30
+consistency_pct: null
+buffer_pct: null
+min_trade_seconds: 30
+max_short_trades_per_session: 10
+weekend_hold_allowed: true
+news_blackout_minutes: 0
+ea_allowed: true
+leverage: {fx: 50, ouro: 5, prata: 5, indices: 5, petroleo: 5, cripto: 2}
+observacoes: >
+  É o único plano em que "10% estático" está correto. Etapa 2 usa a mesma
+  estrutura com meta de 5% (ver double_stage_e2.yaml).

@@ -27,6 +27,8 @@ ao vivo (demo por padrão).
 | `hantecbot/broker/mt5.py` | ponte com o terminal MT5 da Hantec (ordens, SL/TP, parciais) |
 | `hantecbot/live/runner.py` | loop ao vivo, age só no fechamento de candle, diário JSONL/CSV |
 | `hantecbot/report.py` | relatório HTML autocontido com curva de equity em SVG |
+| `hantecbot/prop.py` | **conformidade com mesa proprietária**: pisos diário/total, risco máximo, dias lucrativos, consistência, inatividade |
+| `hantecbot/backtest/challenge.py` | simula a homologação (fases encadeadas) e estima **P(aprovar)** por Monte Carlo |
 
 Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
@@ -34,7 +36,7 @@ Zero dependências além de `PyYAML` (e `MetaTrader5` apenas no modo live).
 
 ```bash
 make install          # cria .venv e instala em modo editável
-make test             # 30 testes
+make test             # 60 testes
 ```
 
 ## Uso em 4 passos
@@ -53,6 +55,73 @@ make test             # 30 testes
 # 4. replay em modo paper (gera diário de operações em runs/)
 .venv/bin/hantecbot paper --csv data/synthetic_M15.csv
 ```
+
+## Mesa proprietária (Fimathe) — homologação do EA
+
+O objetivo aqui **não é maximizar lucro, é ser aprovado**: o robô só usa uma fração
+do limite oficial e prefere parar a arriscar a conta.
+
+```bash
+# simula a homologação nas regras do plano, com relatório e probabilidade de passar
+hantecbot challenge --plano double_stage --csv data/EURUSD_M15.csv \
+    --balance 100000 --montecarlo --report reports/homologacao.html
+
+hantecbot challenge --plano fast          --csv data/EURUSD_M15.csv --montecarlo
+hantecbot challenge --plano instant_lite  --csv data/EURUSD_M15.csv --montecarlo
+
+# ao vivo, aplicando as regras da mesa como trava dura
+hantecbot live -c config/default.yaml --plano double_stage
+```
+
+As regras ficam em presets versionados com **fonte e data de verificação**
+(`config/fimathe/*.yaml`) — nada de número mágico no código:
+
+| | Fast | Double Stage | Financiada | Instant Lite |
+|---|---|---|---|---|
+| Meta | 10% | 10% → 5% | — | — |
+| Perda diária | 5% | 5% | 5% | **3%** |
+| Perda total | **6% trailing** | **10% estático** | idem desafio | **5% trailing** |
+| Risco máx. (flutuante) | — | — | 3% | **1%** |
+| Dias lucrativos | — | 3 (≥0,5%) | 3 | 5 (≥0,5%) |
+| Consistência | — | — | — | 20% |
+
+Transcrito do PDF oficial "Regras Oficiais da Fimathe Prop – Fast, Double Stage e
+Instant Lite" (Mar/2026), verificado em 2026-08-31 — detalhes, exemplos numéricos e
+ritual de atualização em [`docs/regras-fimathe.md`](docs/regras-fimathe.md).
+**Confirme sempre no painel da sua conta antes de homologar.**
+
+### O que o guard faz na prática
+
+* **piso diário** calculado como a mesa calcula: maior valor entre saldo e equity no
+  fechamento do dia anterior (virar o dia no lucro *sobe* a régua);
+* **corte de tamanho**: cada ordem é limitada pela folga que ainda existe até o piso
+  diário, até o piso total e até a regra de risco máximo — o que for menor;
+* **`safety_factor`** (padrão 0,5): o robô só gasta metade do limite oficial do dia;
+* **trava do dia** por perda *e* por lucro (encerrar no verde ajuda a consistência);
+* **zera posição antes do rollover**, para não deixar flutuante mexer na régua do dia;
+* **keep-alive**: 30 dias sem operar é violação grave; após 25 dias parado o robô abre
+  uma posição de volume mínimo só para zerar o contador (`guard.keepalive_after_days`,
+  pode desligar e receber só o alerta);
+* **para de operar ao bater a meta** da fase — desafio aprovado não se arrisca mais.
+
+Exemplo de saída:
+
+```
+⏳ NÃO CONCLUÍDO  —  fimathe_double_stage_e1
+    retorno            : -0.39%
+    dias operados      : 99 (24 lucrativos)
+    pior dia           : -1.70%          <- limite oficial: -5%
+    maior pausa        : 4 dias sem operar (violação em 30)
+    consistência       : 4.3% (melhor dia / lucro)
+    encerrado por      : kill switch interno: drawdown máximo atingido (-6.33%)
+
+Monte Carlo (bootstrap de 99 dias reais):
+  P(aprovar)  :   4.1%      P(violar)  :   5.4%
+```
+
+Leia assim: o EA **não violou a mesa** (o kill switch interno de 6% agiu antes do piso
+de 10%), mas com esta estratégia/dados a chance de aprovação é baixa — o que significa
+"melhore a vantagem estatística antes de pagar o desafio", não "aumente o risco".
 
 Ao vivo, na Hantec (Windows/Wine com o terminal MT5 instalado):
 
@@ -103,17 +172,21 @@ risco dispõe. Sinal sem stop definido é recusado por construção.
 * Critério mínimo antes de pensar em dinheiro real: walk-forward positivo em várias
   janelas, > 200 operações, drawdown tolerável **e** 3 meses de conta demo com
   comportamento parecido com o simulado.
+* Para mesa proprietária, some a isto: `P(aprovar)` do Monte Carlo acima de ~60% e
+  `P(violar)` abaixo de ~10% **com dados reais do ativo** — abaixo disso, o desafio é
+  uma loteria paga.
 
 ## Estrutura
 
 ```
 src/hantecbot/
-  models.py indicators.py stream.py risk.py management.py journal.py report.py cli.py
+  models.py indicators.py stream.py risk.py management.py prop.py journal.py report.py cli.py
   strategies/{base,trend_atr,mean_reversion}.py
   broker/{base,paper,mt5}.py
-  backtest/{engine,metrics,optimizer}.py
+  backtest/{engine,metrics,optimizer,challenge}.py
   live/runner.py
-config/default.yaml   tests/   Makefile   ci/github-actions-ci.yml
+config/default.yaml   config/fimathe/*.yaml   docs/regras-fimathe.md
+tests/   Makefile   ci/github-actions-ci.yml
 ```
 
 ## Roadmap

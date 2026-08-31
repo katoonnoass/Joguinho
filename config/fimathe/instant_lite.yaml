@@ -1,0 +1,31 @@
+# Fimathe Prop — INSTANT LITE (o plano mais restritivo)
+# Fonte: PDF oficial Mar/2026 + FAQ da mesa. Reconfira antes de usar.
+name: fimathe_instant_lite
+fonte: https://fimatheprop.com/wp-content/uploads/2026/04/Regras-Oficiais-da-Fimathe-Prop_Mar2026-2.pdf
+verificado_em: "2026-08-31"
+
+profit_target_pct: null       # sem meta de lucro; o objetivo é sacar
+min_profit_days: 5            # 5 dias lucrativos...
+min_profit_day_pct: 0.5       # ...com crescimento >= 0,5% do saldo inicial
+
+daily_loss_pct: 3.0           # ATENÇÃO: 3%, não 5%
+daily_baseline: max_balance_equity_prev_close
+
+total_loss_pct: 5.0
+total_loss_mode: trailing     # 5% trailing, trava com lucro fechado >= 5%
+trailing_locks_at_initial: true
+
+max_risk_pct: 1.0             # equity não pode cair 1% abaixo do saldo (flutuante!)
+max_inactivity_days: 30
+consistency_pct: 20.0         # melhor dia / lucro total <= 20% para sacar
+buffer_pct: 3.0               # primeiros 3% de lucro não sacáveis
+min_trade_seconds: 30
+max_short_trades_per_session: 10
+weekend_hold_allowed: true
+news_blackout_minutes: 0
+ea_allowed: true
+leverage: {fx: 50, ouro: 5, prata: 5, indices: 5, petroleo: 5, cripto: 2}
+observacoes: >
+  A regra de Risco Máximo de 1% limita o PREJUÍZO FLUTUANTE: se o equity cair
+  1% abaixo do saldo, a conta é violada. Na prática o EA precisa operar com
+  risco por trade bem abaixo de 1% (ver guard.max_risk_per_trade_pct).

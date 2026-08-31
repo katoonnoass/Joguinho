@@ -51,3 +51,21 @@ execution:
   partial_take_at_r: 1.0
   breakeven_at_r: 1.0
   trail_atr_mult: 2.5
+
+# Camada de mesa proprietária (opcional).
+# Aponte para um preset em config/fimathe/ ou passe --plano na CLI.
+# prop: config/fimathe/double_stage_e1.yaml
+
+guard:
+  safety_factor: 0.5            # usa no máx. 50% do limite diário oficial
+  total_safety_factor: 0.6      # e 60% da folga até o piso total
+  max_risk_per_trade_pct: 0.5
+  max_trades_per_day: 5
+  stop_day_after_target: true
+  daily_profit_target_pct: 1.0  # encerra o dia após +1% (ajuda a consistência)
+  flatten_before_rollover: true # zera posição antes da virada do dia
+  rollover_hour_utc: 20
+  respect_consistency: true
+  stop_after_target_reached: true
+  inactivity_alert_days: 20
+  keepalive_after_days: 25      # operação mínima p/ não violar por inatividade (null = desliga)

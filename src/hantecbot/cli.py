@@ -17,13 +17,20 @@ from copy import deepcopy
 from typing import List, Optional, Sequence
 
 from . import __version__
+from .backtest.challenge import ChallengeReport, monte_carlo, run_challenge
 from .backtest.engine import Backtester
 from .backtest.optimizer import optimize, walk_forward
-from .config import BotConfig
+from .config import BotConfig, load_prop_rules
 from .data import generate, load_csv, save_csv
 from .journal import Journal
 from .models import Candle
 from .report import write_report
+
+DISCLAIMER_PROP = (
+    "\n⚠  As regras da mesa foram transcritas de um documento público em uma data\n"
+    "   específica (campos `fonte` e `verificado_em` nos presets). Mesas mudam regra\n"
+    "   sem aviso: confirme no painel/termos da sua conta ANTES de homologar.\n"
+)
 
 DISCLAIMER = (
     "\n⚠  Trading de forex/CFD é alavancado e de alto risco: a maioria das contas de\n"
@@ -87,6 +94,72 @@ def cmd_backtest(args) -> int:
         print(f"\n✓ relatório HTML: {path}")
     print(DISCLAIMER)
     return 0
+
+
+PLANOS = {
+    "fast": ["config/fimathe/fast.yaml"],
+    "double_stage": ["config/fimathe/double_stage_e1.yaml",
+                     "config/fimathe/double_stage_e2.yaml"],
+    "instant_lite": ["config/fimathe/instant_lite.yaml"],
+    "financiada": ["config/fimathe/conta_financiada.yaml"],
+}
+
+
+def cmd_challenge(args) -> int:
+    """Simula a homologação do EA nas regras da mesa proprietária."""
+    cfg = _load_cfg(args.config)
+    if args.strategy:
+        cfg.strategy.name = args.strategy
+    if args.balance:
+        cfg.initial_balance = args.balance
+    if args.safety:
+        cfg.guard.safety_factor = args.safety
+    if args.max_risk:
+        cfg.guard.max_risk_per_trade_pct = args.max_risk
+
+    paths = PLANOS.get(args.plano, [args.plano])
+    rules = [load_prop_rules(p) for p in paths]
+    candles = _candles(args)
+
+    print(f"\nPlano: {args.plano}  |  {len(rules)} fase(s)  |  saldo inicial "
+          f"{cfg.initial_balance:,.2f}")
+    for r in rules:
+        alvo = f"{r.profit_target_pct}%" if r.profit_target_pct is not None else "sem meta"
+        total = f"{r.total_loss_pct}% {r.total_loss_mode}"
+        print(f"  • {r.name}: meta {alvo} | perda diária {r.daily_loss_pct}% "
+              f"| perda total {total} | dias lucrativos {r.min_profit_days}"
+              + (f" | risco máx {r.max_risk_pct}%" if r.max_risk_pct else ""))
+        print(f"    fonte: {r.fonte or '(sem fonte registrada)'} "
+              f"| verificado em: {r.verificado_em or '?'}")
+
+    report = run_challenge(cfg, candles, rules)
+    print()
+    print(report.render())
+
+    ultima = report.fases[-1] if report.fases else None
+    if ultima is not None and ultima.resultado is not None:
+        res = ultima.resultado
+        if res.rejections:
+            top = sorted(res.rejections.items(), key=lambda kv: -kv[1])[:6]
+            print("\n  Entradas barradas: " + ", ".join(f"{k} x{v}" for k, v in top))
+        if args.montecarlo and res.daily_log:
+            dailies = [100.0 * d[1] / cfg.initial_balance for d in res.daily_log]
+            mc = monte_carlo(dailies, rules[0], cfg.initial_balance,
+                             scenarios=args.scenarios, max_days=args.max_days)
+            print(f"\nMonte Carlo ({rules[0].name}, bootstrap de {len(dailies)} dias reais):")
+            print(mc.render())
+        if args.report:
+            path = write_report(args.report, res.metrics, res.trades, res.equity_curve,
+                                title=f"Homologação {args.plano} — {cfg.symbol.symbol}",
+                                meta={"plano": args.plano,
+                                      "fonte das regras": rules[0].fonte,
+                                      "verificado em": rules[0].verificado_em,
+                                      "veredito": "APROVADO" if report.aprovado else "REPROVADO",
+                                      "risco por trade": f"{cfg.risk.risk_per_trade_pct:.2f}%",
+                                      "safety factor": cfg.guard.safety_factor})
+            print(f"\n✓ relatório HTML: {path}")
+    print(DISCLAIMER_PROP)
+    return 0 if report.aprovado else 1
 
 
 DEFAULT_SPACES = {
@@ -185,6 +258,13 @@ def cmd_paper(args) -> int:
 
 def cmd_live(args) -> int:
     cfg = _load_cfg(args.config)
+    if getattr(args, "plano", None):
+        paths = PLANOS.get(args.plano, [args.plano])
+        cfg.prop = load_prop_rules(paths[0])
+        cfg.apply_prop_rules()
+        print(f"• regras da mesa aplicadas: {cfg.prop.name} "
+              f"(verificado em {cfg.prop.verificado_em}) | risco por trade "
+              f"ajustado para {cfg.risk.risk_per_trade_pct:.2f}%")
     from .broker.mt5 import MT5Broker
     from .live.runner import LiveRunner
 
@@ -255,10 +335,24 @@ def build_parser() -> argparse.ArgumentParser:
     pa.add_argument("--out-dir", default="runs")
     pa.set_defaults(func=cmd_paper)
 
+    ch = sub.add_parser("challenge", help="simular a homologação numa mesa proprietária")
+    common(ch)
+    ch.add_argument("--plano", default="double_stage",
+                    help="fast | double_stage | instant_lite | financiada | caminho de YAML")
+    ch.add_argument("--balance", type=float, help="saldo inicial da conta do desafio")
+    ch.add_argument("--safety", type=float, help="fração do limite diário usada (0-1)")
+    ch.add_argument("--max-risk", type=float, help="teto de risco por operação (%%)")
+    ch.add_argument("--montecarlo", action="store_true", help="estimar P(aprovar)")
+    ch.add_argument("--scenarios", type=int, default=5000)
+    ch.add_argument("--max-days", type=int, default=60)
+    ch.add_argument("--report")
+    ch.set_defaults(func=cmd_challenge)
+
     l = sub.add_parser("live", help="operar via MT5 (demo por padrão)")
     l.add_argument("-c", "--config", default="config/default.yaml")
     l.add_argument("--live", action="store_true", help="autorizar conta REAL")
     l.add_argument("--out-dir", default="runs")
+    l.add_argument("--plano", help="aplicar regras de mesa ao vivo (ex.: double_stage)")
     l.set_defaults(func=cmd_live)
     return p
 
