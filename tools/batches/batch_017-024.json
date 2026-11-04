@@ -1,0 +1,40 @@
+{
+  "start": 17,
+  "category": "A \u2014 Terrain and Ground",
+  "anchor": "tile",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "017_curved_stone_path",
+      "name": "Curved stone path"
+    },
+    {
+      "slug": "018_t_junction_stone_path",
+      "name": "T-junction stone path"
+    },
+    {
+      "slug": "019_crossroads_stone_path",
+      "name": "Crossroads stone path"
+    },
+    {
+      "slug": "020_clean_shallow_water_tile",
+      "name": "Clean shallow water tile"
+    },
+    {
+      "slug": "021_water_tile_with_ripples",
+      "name": "Water tile with ripples"
+    },
+    {
+      "slug": "022_straight_pond_edge",
+      "name": "Straight pond edge"
+    },
+    {
+      "slug": "023_curved_pond_edge",
+      "name": "Curved pond edge"
+    },
+    {
+      "slug": "024_raised_grassy_terrain_block",
+      "name": "Raised grassy terrain block"
+    }
+  ]
+}

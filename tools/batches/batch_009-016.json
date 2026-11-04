@@ -1,0 +1,16 @@
+{
+  "start": 9,
+  "category": "A — Terrain and Ground",
+  "anchor": "tile",
+  "threshold": 0.08,
+  "assets": [
+    {"slug": "009_light_sandy_ground", "name": "Light sandy ground"},
+    {"slug": "010_gravel_ground", "name": "Gravel ground"},
+    {"slug": "011_natural_stone_pavement", "name": "Natural stone pavement"},
+    {"slug": "012_straight_dirt_path", "name": "Straight dirt path"},
+    {"slug": "013_curved_dirt_path", "name": "Curved dirt path"},
+    {"slug": "014_t_junction_dirt_path", "name": "T-junction dirt path"},
+    {"slug": "015_crossroads_dirt_path", "name": "Crossroads dirt path"},
+    {"slug": "016_straight_stone_path", "name": "Straight stone path"}
+  ]
+}
