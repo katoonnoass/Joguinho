@@ -1,0 +1,1526 @@
+{
+  "pack": "Joguinho \u2014 Isometric Farm Game Asset Pack",
+  "total_assets": 200,
+  "generated": 8,
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows, 8 assets per sheet",
+  "tile_canvas": "512x384",
+  "tile_anchor": [
+    256,
+    160
+  ],
+  "ground_footprint": "128x64 units (2:1 isometric diamond)",
+  "style_reference": "sheets/terrain_001-008.png",
+  "categories": [
+    {
+      "name": "A \u2014 Terrain and Ground",
+      "count": 24,
+      "first": 1,
+      "last": 24
+    },
+    {
+      "name": "B \u2014 Farm Crops",
+      "count": 30,
+      "first": 25,
+      "last": 54
+    },
+    {
+      "name": "C \u2014 Fruit Trees and Bushes",
+      "count": 20,
+      "first": 55,
+      "last": 74
+    },
+    {
+      "name": "D \u2014 Farm Buildings",
+      "count": 24,
+      "first": 75,
+      "last": 98
+    },
+    {
+      "name": "E \u2014 Farm Animals",
+      "count": 18,
+      "first": 99,
+      "last": 116
+    },
+    {
+      "name": "F \u2014 Tools and Farm Equipment",
+      "count": 18,
+      "first": 117,
+      "last": 134
+    },
+    {
+      "name": "G \u2014 Fences and Structures",
+      "count": 16,
+      "first": 135,
+      "last": 150
+    },
+    {
+      "name": "H \u2014 Environment Decorations",
+      "count": 22,
+      "first": 151,
+      "last": 172
+    },
+    {
+      "name": "I \u2014 Harvestable Items and Products",
+      "count": 20,
+      "first": 173,
+      "last": 192
+    },
+    {
+      "name": "J \u2014 Game UI Icons",
+      "count": 8,
+      "first": 193,
+      "last": 200
+    }
+  ],
+  "assets": [
+    {
+      "id": 1,
+      "name": "Clean vibrant grass tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/001_grass_tile.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Grass with tiny wildflowers",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/002_grass_wildflowers.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Grass with clovers",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/003_grass_clover.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Dry grass tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/004_dry_grass.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Empty plowed soil tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/005_plowed_soil.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Wet cultivated soil tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/006_wet_cultivated_soil.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Soil with tiny seedlings",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/007_seedling_soil.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Mud tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "done",
+      "footprint": "1x1 tile",
+      "file": "individual/008_mud_tile.png",
+      "sheet": "sheets/terrain_001-008.png",
+      "sheet_cell": [
+        4,
+        2
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Light sandy ground",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 10,
+      "name": "Gravel ground",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 11,
+      "name": "Natural stone pavement",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 12,
+      "name": "Straight dirt path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 13,
+      "name": "Curved dirt path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 14,
+      "name": "T-junction dirt path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 15,
+      "name": "Crossroads dirt path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 16,
+      "name": "Straight stone path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 17,
+      "name": "Curved stone path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 18,
+      "name": "T-junction stone path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 19,
+      "name": "Crossroads stone path",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 20,
+      "name": "Clean shallow water tile",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 21,
+      "name": "Water tile with ripples",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 22,
+      "name": "Straight pond edge",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 23,
+      "name": "Curved pond edge",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 24,
+      "name": "Raised grassy terrain block",
+      "category": "A \u2014 Terrain and Ground",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 25,
+      "name": "Wheat \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 26,
+      "name": "Wheat \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 27,
+      "name": "Wheat \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 28,
+      "name": "Corn \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 29,
+      "name": "Corn \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 30,
+      "name": "Corn \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 31,
+      "name": "Carrot \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 32,
+      "name": "Carrot \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 33,
+      "name": "Carrot \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 34,
+      "name": "Potato \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 35,
+      "name": "Potato \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 36,
+      "name": "Potato \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 37,
+      "name": "Tomato \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 38,
+      "name": "Tomato \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 39,
+      "name": "Tomato \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 40,
+      "name": "Lettuce \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 41,
+      "name": "Lettuce \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 42,
+      "name": "Lettuce \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 43,
+      "name": "Strawberry \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 44,
+      "name": "Strawberry \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 45,
+      "name": "Strawberry \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 46,
+      "name": "Pumpkin \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 47,
+      "name": "Pumpkin \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 48,
+      "name": "Pumpkin \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 49,
+      "name": "Sunflower \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 50,
+      "name": "Sunflower \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 51,
+      "name": "Sunflower \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 52,
+      "name": "Sugar cane \u2014 young seedling",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 53,
+      "name": "Sugar cane \u2014 growing plant",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 54,
+      "name": "Sugar cane \u2014 mature harvest-ready",
+      "category": "B \u2014 Farm Crops",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 55,
+      "name": "Apple tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 56,
+      "name": "Apple tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 57,
+      "name": "Orange tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 58,
+      "name": "Orange tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 59,
+      "name": "Lemon tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 60,
+      "name": "Lemon tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 61,
+      "name": "Pear tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 62,
+      "name": "Pear tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 63,
+      "name": "Peach tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 64,
+      "name": "Peach tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 65,
+      "name": "Cherry tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 66,
+      "name": "Cherry tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 67,
+      "name": "Coconut palm \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 68,
+      "name": "Coconut palm \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 69,
+      "name": "Banana tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 70,
+      "name": "Banana tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 71,
+      "name": "Olive tree \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 72,
+      "name": "Olive tree \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 73,
+      "name": "Raspberry bush \u2014 healthy",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 74,
+      "name": "Raspberry bush \u2014 fruit-bearing",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "status": "pending",
+      "footprint": "2x2 tiles"
+    },
+    {
+      "id": 75,
+      "name": "Small farmhouse",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 76,
+      "name": "Upgraded farmhouse",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 77,
+      "name": "Small red barn",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 78,
+      "name": "Large upgraded barn",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 79,
+      "name": "Small grain silo",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 80,
+      "name": "Large grain silo",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 81,
+      "name": "Chicken coop",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 82,
+      "name": "Cow stable",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 83,
+      "name": "Pig shelter",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 84,
+      "name": "Sheep barn",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 85,
+      "name": "Goat shelter",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 86,
+      "name": "Wooden beehive station",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 87,
+      "name": "Windmill",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 88,
+      "name": "Watermill",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 89,
+      "name": "Rustic bakery",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 90,
+      "name": "Dairy production building",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 91,
+      "name": "Animal feed mill",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 92,
+      "name": "Tool workshop",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 93,
+      "name": "Preserves and jam kitchen",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 94,
+      "name": "Fruit juice press",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 95,
+      "name": "Candy production kitchen",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 96,
+      "name": "Farm market stall",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 97,
+      "name": "Tool storage shed",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 98,
+      "name": "Stone water well",
+      "category": "D \u2014 Farm Buildings",
+      "status": "pending",
+      "footprint": "2x2\u20134x4 tiles"
+    },
+    {
+      "id": 99,
+      "name": "Chicken \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 100,
+      "name": "Chicken \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 101,
+      "name": "Chicken \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 102,
+      "name": "Cow \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 103,
+      "name": "Cow \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 104,
+      "name": "Cow \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 105,
+      "name": "Pig \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 106,
+      "name": "Pig \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 107,
+      "name": "Pig \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 108,
+      "name": "Sheep \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 109,
+      "name": "Sheep \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 110,
+      "name": "Sheep \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 111,
+      "name": "Goat \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 112,
+      "name": "Goat \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 113,
+      "name": "Goat \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 114,
+      "name": "Duck \u2014 idle",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 115,
+      "name": "Duck \u2014 walking",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 116,
+      "name": "Duck \u2014 eating",
+      "category": "E \u2014 Farm Animals",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 117,
+      "name": "Watering can",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 118,
+      "name": "Shovel",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 119,
+      "name": "Garden hoe",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 120,
+      "name": "Garden rake",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 121,
+      "name": "Harvesting sickle",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 122,
+      "name": "Metal bucket",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 123,
+      "name": "Wooden wheelbarrow",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 124,
+      "name": "Empty wooden cart",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 125,
+      "name": "Cart loaded with vegetables",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 126,
+      "name": "Small vintage tractor",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 127,
+      "name": "Hay trailer",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 128,
+      "name": "Hand plow",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 129,
+      "name": "Empty wicker basket",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 130,
+      "name": "Harvest basket",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 131,
+      "name": "Wooden water barrel",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 132,
+      "name": "Wooden storage crate",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 133,
+      "name": "Stack of grain sacks",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 134,
+      "name": "Stack of hay bales",
+      "category": "F \u2014 Tools and Farm Equipment",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 135,
+      "name": "Straight wooden fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 136,
+      "name": "Corner wooden fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 137,
+      "name": "Wooden fence end piece",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 138,
+      "name": "Closed wooden gate",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 139,
+      "name": "Open wooden gate",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 140,
+      "name": "Straight white picket fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 141,
+      "name": "Corner white picket fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 142,
+      "name": "White picket gate",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 143,
+      "name": "Straight stone fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 144,
+      "name": "Corner stone fence",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 145,
+      "name": "Flower-covered stone wall",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 146,
+      "name": "Decorative flower archway",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 147,
+      "name": "Small wooden bridge",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 148,
+      "name": "Small stone bridge",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 149,
+      "name": "Wooden outdoor steps",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 150,
+      "name": "Rustic farm lamp post",
+      "category": "G \u2014 Fences and Structures",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 151,
+      "name": "Large decorative rocks",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 152,
+      "name": "Small pebble cluster",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 153,
+      "name": "Fallen tree log",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 154,
+      "name": "Chopped tree stump",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 155,
+      "name": "Low green bush",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 156,
+      "name": "Pink flowering bush",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 157,
+      "name": "Yellow flowering bush",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 158,
+      "name": "Daisy flower patch",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 159,
+      "name": "Tulip flowerbed",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 160,
+      "name": "Lavender flowerbed",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 161,
+      "name": "Empty ceramic flower pot",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 162,
+      "name": "Flower-filled ceramic pot",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 163,
+      "name": "Friendly scarecrow",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 164,
+      "name": "Rustic wooden bench",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 165,
+      "name": "Picnic table",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 166,
+      "name": "Decorative oak tree",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 167,
+      "name": "Decorative pine tree",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 168,
+      "name": "Small stone fountain",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 169,
+      "name": "Wooden birdhouse",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 170,
+      "name": "Firewood pile",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 171,
+      "name": "Blank wooden signboard",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 172,
+      "name": "Small decorative pond",
+      "category": "H \u2014 Environment Decorations",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 173,
+      "name": "Harvested wheat bundle",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 174,
+      "name": "Corn cob",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 175,
+      "name": "Fresh carrot",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 176,
+      "name": "Potato",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 177,
+      "name": "Tomato",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 178,
+      "name": "Lettuce head",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 179,
+      "name": "Strawberry",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 180,
+      "name": "Pumpkin",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 181,
+      "name": "Harvested sunflower",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 182,
+      "name": "Sugar cane bundle",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 183,
+      "name": "Apple",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 184,
+      "name": "Orange",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 185,
+      "name": "Lemon",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 186,
+      "name": "Pear",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 187,
+      "name": "Chicken egg",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 188,
+      "name": "Milk bottle",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 189,
+      "name": "Cheese wheel",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 190,
+      "name": "Artisan bread loaf",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 191,
+      "name": "Honey jar",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 192,
+      "name": "Flour sack",
+      "category": "I \u2014 Harvestable Items and Products",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 193,
+      "name": "Gold coin",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 194,
+      "name": "Blue premium gem",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 195,
+      "name": "Energy icon",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 196,
+      "name": "Experience star",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 197,
+      "name": "Land expansion icon",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 198,
+      "name": "Construction icon",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 199,
+      "name": "Harvest action icon",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    },
+    {
+      "id": 200,
+      "name": "Delivery order icon",
+      "category": "J \u2014 Game UI Icons",
+      "status": "pending",
+      "footprint": "1x1 tile"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "sheet": "sheets/terrain_001-008.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "tile_anchor": [
+    256,
+    160
+  ],
+  "style_reference": "sheets/terrain_001-008.png",
+  "assets": [
+    {
+      "id": 1,
+      "name": "Clean vibrant grass tile",
+      "file": "individual/001_grass_tile.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Grass with tiny wildflowers",
+      "file": "individual/002_grass_wildflowers.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Grass with clovers",
+      "file": "individual/003_grass_clover.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Dry grass tile",
+      "file": "individual/004_dry_grass.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Empty plowed soil tile",
+      "file": "individual/005_plowed_soil.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Wet cultivated soil tile",
+      "file": "individual/006_wet_cultivated_soil.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Soil with tiny seedlings",
+      "file": "individual/007_seedling_soil.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Mud tile",
+      "file": "individual/008_mud_tile.png",
+      "category": "A \u2014 Terrain and Ground",
+      "footprint": "1x1 tile (128x64 units)",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}
