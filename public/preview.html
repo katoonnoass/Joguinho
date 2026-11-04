@@ -32,7 +32,7 @@
   .progress-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700;color:var(--green-dark)}
   .progress-top small{font-weight:600;color:var(--muted);font-size:12px}
   .bar{height:10px;border-radius:999px;background:#eee8d8;margin-top:9px;overflow:hidden}
-  .bar i{display:block;height:100%;width:4%;border-radius:999px;background:linear-gradient(90deg,var(--green),#8cb85a)}
+  .bar i{display:block;height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--green),#8cb85a);transition:width .4s ease}
   .section{padding:34px 0}
   .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
   h2{font-size:clamp(22px,2.6vw,30px);margin:0;letter-spacing:-.01em}
@@ -42,13 +42,14 @@
   .sheet-frame img{display:block;width:100%;height:auto;border-radius:12px}
   .sheet-meta{display:flex;flex-wrap:wrap;gap:10px;padding:14px 18px;font-size:12.5px;color:var(--muted)}
   .chip{background:var(--green-light);border:1px solid #d6e4bf;color:var(--green-dark);
-        border-radius:999px;padding:5px 11px;font-weight:700;font-size:11.5px;letter-spacing:.02em}
+        border-radius:999px;padding:5px 11px;font-weight:700;font-size:11.5px;letter-spacing:.02em;
+        text-decoration:none;display:inline-flex;align-items:center;gap:6px}
   .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
   .tile{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;
         box-shadow:0 8px 20px rgba(63,74,48,.06);transition:transform .18s ease, box-shadow .18s ease}
   .tile:hover{transform:translateY(-3px);box-shadow:0 16px 30px rgba(63,74,48,.13)}
   .tile .art{background:var(--checker);padding:10px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
-  .tile .art img{width:100%;height:auto;display:block}
+  .tile .art img{width:100%;height:auto;display:block;object-fit:contain;max-height:220px}
   .tile .info{padding:12px 14px 14px}
   .tile .id{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--green);text-transform:uppercase}
   .tile .name{font-size:14px;font-weight:700;margin-top:2px;line-height:1.3}
@@ -67,11 +68,12 @@
   .cat-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line)}
   .cat-row span:first-child{color:#4d5745}
   .cat-row b{color:var(--green-dark);font-size:12px;white-space:nowrap}
+  .sheet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
   footer{padding:34px 0 54px;text-align:center;color:var(--muted);font-size:12.5px}
   footer .wrap{border-top:1px solid var(--line);padding-top:22px}
   @media (max-width:900px){
     .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .two-col{grid-template-columns:1fr}
+    .two-col,.sheet-grid{grid-template-columns:1fr}
   }
   @media (max-width:560px){
     .grid{grid-template-columns:1fr}
@@ -89,7 +91,7 @@
     <p class="sub">A charming, original isometric farming world — stylized 3D-rendered art,
       warm saturated colors, soft upper-left light and cozy countryside polish.</p>
     <div class="progress">
-      <div class="progress-top"><span>Production progress</span><small id="progressLabel">8 / 200 assets</small></div>
+      <div class="progress-top"><span>Production progress</span><small id="progressLabel">loading…</small></div>
       <div class="bar"><i id="progressBar"></i></div>
     </div>
   </div>
@@ -97,33 +99,23 @@
 
 <main class="wrap">
 
-  <section class="section" id="sheet">
+  <section class="section" id="sheets">
     <div class="section-head">
       <div>
-        <h2>Style reference — Sheet 01</h2>
-        <p>Terrain and Ground, assets 001–008. This approved sheet is the visual reference for every following batch.</p>
-      </div>
-      <a class="chip" href="assets/sheets/terrain_001-008.png" download>Download sheet ↓</a>
-    </div>
-    <div class="card">
-      <div class="sheet-frame"><img src="assets/sheets/terrain_001-008.png" alt="Isometric terrain asset sheet 001 to 008 on a transparent background"></div>
-      <div class="sheet-meta">
-        <span class="chip">2048 × 1024</span>
-        <span class="chip">4 × 2 grid</span>
-        <span class="chip">Transparent PNG</span>
-        <span class="chip">2:1 isometric tiles</span>
-        <span class="chip">Anchor 256, 160</span>
+        <h2>Contact sheets</h2>
+        <p>One 2048 × 1024 sheet per batch of 8, in catalog order. The first sheet is the approved style reference.</p>
       </div>
     </div>
+    <div class="sheet-grid" id="sheetGrid"></div>
   </section>
 
   <section class="section" id="tiles">
     <div class="section-head">
       <div>
-        <h2>Individual production tiles</h2>
-        <p>512 × 384 transparent canvases, normalized to a 2:1 top face and aligned to a shared ground anchor.</p>
+        <h2>Completed assets</h2>
+        <p>Every finished asset as an individual transparent PNG, straight from the live catalog.</p>
       </div>
-      <a class="chip" href="assets/terrain_001-008.zip" download>Download batch ↓</a>
+      <span class="chip" id="assetCount">…</span>
     </div>
     <div class="grid" id="tileGrid"></div>
   </section>
@@ -149,11 +141,11 @@
           <tr><td>Format</td><td>PNG with real alpha</td></tr>
           <tr><td>Contact sheet</td><td>2048 × 1024 · 4 × 2</td></tr>
           <tr><td>Assets per sheet</td><td>Exactly 8</td></tr>
-          <tr><td>Individual canvas</td><td>512 × 384</td></tr>
+          <tr><td>Tile canvas</td><td>512 × 384 (ground anchor 256,160)</td></tr>
+          <tr><td>Object canvas</td><td>512 × 512 (bottom anchor 256,470)</td></tr>
+          <tr><td>UI canvas</td><td>512 × 512 (center anchor)</td></tr>
           <tr><td>Ground footprint</td><td>128 × 64 units (2:1)</td></tr>
-          <tr><td>Ground anchor</td><td>256, 160</td></tr>
           <tr><td>Light direction</td><td>Upper-left</td></tr>
-          <tr><td>UI icons</td><td>Front-facing 2D only</td></tr>
         </table>
       </div>
     </div>
@@ -175,52 +167,78 @@
 
 <footer>
   <div class="wrap">
-    Joguinho · Isometric Farm Game Asset Pack · 8 of 200 assets generated ·
+    Joguinho · Isometric Farm Game Asset Pack · <span id="footCount">…</span> of 200 assets generated ·
     Style reference: <code>assets/sheets/terrain_001-008.png</code>
   </div>
 </footer>
 
 <script>
-const TILES = [
-  {id:1,  name:"Clean vibrant grass tile",      file:"001_grass_tile",             spec:"1×1 tile · grass top"},
-  {id:2,  name:"Grass with tiny wildflowers",   file:"002_grass_wildflowers",      spec:"1×1 tile · wildflowers"},
-  {id:3,  name:"Grass with clovers",            file:"003_grass_clover",           spec:"1×1 tile · clover"},
-  {id:4,  name:"Dry grass tile",                file:"004_dry_grass",              spec:"1×1 tile · dry grass"},
-  {id:5,  name:"Empty plowed soil tile",        file:"005_plowed_soil",            spec:"1×1 tile · tilled soil"},
-  {id:6,  name:"Wet cultivated soil tile",      file:"006_wet_cultivated_soil",    spec:"1×1 tile · damp soil"},
-  {id:7,  name:"Soil with tiny seedlings",      file:"007_seedling_soil",          spec:"1×1 tile · seedlings"},
-  {id:8,  name:"Mud tile",                      file:"008_mud_tile",               spec:"1×1 tile · wet mud"}
-];
-const CATS = [
-  ["A — Terrain and Ground", 24, 8],
-  ["B — Farm Crops", 30, 0],
-  ["C — Fruit Trees and Bushes", 20, 0],
-  ["D — Farm Buildings", 24, 0],
-  ["E — Farm Animals", 18, 0],
-  ["F — Tools and Farm Equipment", 18, 0],
-  ["G — Fences and Structures", 16, 0],
-  ["H — Environment Decorations", 22, 0],
-  ["I — Harvestable Items and Products", 20, 0],
-  ["J — Game UI Icons", 8, 0]
-];
+const pad = n => String(n).padStart(3, "0");
 
-const grid = document.getElementById("tileGrid");
-grid.innerHTML = TILES.map(t => `
-  <article class="tile">
-    <div class="art"><img loading="lazy" src="assets/individual/${t.file}.png" alt="${t.name}"></div>
-    <div class="info">
-      <div class="id">${String(t.id).padStart(3,"0")}</div>
-      <div class="name">${t.name}</div>
-      <div class="spec">${t.spec}</div>
-    </div>
-  </article>`).join("");
+async function loadJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url + " → " + r.status);
+  return r.json();
+}
 
-document.getElementById("catList").innerHTML = CATS.map(([name,total,done]) => `
-  <div class="cat-row"><span>${name}</span><b>${done} / ${total}</b></div>`).join("");
+function renderSheets(sheets) {
+  document.getElementById("sheetGrid").innerHTML = sheets.map((s, i) => `
+    <div class="card">
+      <div class="sheet-frame"><img loading="lazy" src="assets/sheets/${s}" alt="Contact sheet ${s}"></div>
+      <div class="sheet-meta">
+        <span class="chip">Sheet ${pad(i + 1)}</span>
+        <span class="chip">${s.replace(/\.png$/, "")}</span>
+        <a class="chip" href="assets/sheets/${s}" download>Download ↓</a>
+      </div>
+    </div>`).join("");
+}
 
-const pct = (8 / 200) * 100;
-document.getElementById("progressBar").style.width = pct + "%";
-document.getElementById("progressLabel").textContent = "8 / 200 assets · " + pct.toFixed(0) + "%";
+function renderAssets(assets) {
+  const done = assets.filter(a => a.status === "done");
+  document.getElementById("assetCount").textContent = `${done.length} / ${assets.length} done`;
+  document.getElementById("tileGrid").innerHTML = done.map(a => `
+    <article class="tile">
+      <div class="art"><img loading="lazy" src="assets/individual/${a.slug}.png" alt="${a.name}"></div>
+      <div class="info">
+        <div class="id">${pad(a.id)} · ${a.anchor}</div>
+        <div class="name">${a.name}</div>
+        <div class="spec">${a.category}</div>
+      </div>
+    </article>`).join("");
+  return done.length;
+}
+
+function renderCats(assets) {
+  const map = new Map();
+  for (const a of assets) {
+    if (!map.has(a.category)) map.set(a.category, { total: 0, done: 0 });
+    const c = map.get(a.category);
+    c.total++;
+    if (a.status === "done") c.done++;
+  }
+  document.getElementById("catList").innerHTML = [...map.entries()].map(([name, c]) => `
+    <div class="cat-row"><span>${name}</span><b>${c.done} / ${c.total}</b></div>`).join("");
+}
+
+(async () => {
+  try {
+    const [catalog, sheetIndex] = await Promise.all([
+      loadJSON("assets/catalog.json"),
+      loadJSON("assets/sheets/index.json"),
+    ]);
+    const assets = catalog.assets || catalog;
+    const done = renderAssets(assets);
+    renderCats(assets);
+    renderSheets(sheetIndex.sheets || []);
+    const pct = (done / 200) * 100;
+    document.getElementById("progressBar").style.width = pct + "%";
+    document.getElementById("progressLabel").textContent = `${done} / 200 assets · ${pct.toFixed(0)}%`;
+    document.getElementById("footCount").textContent = done;
+  } catch (e) {
+    document.getElementById("progressLabel").textContent = "failed to load catalog";
+    console.error(e);
+  }
+})();
 </script>
 </body>
 </html>
