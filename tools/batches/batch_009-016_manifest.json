@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/terrain_009-016.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "A \u2014 Terrain and Ground",
+  "assets": [
+    {
+      "id": 9,
+      "name": "Light sandy ground",
+      "file": "individual/009_light_sandy_ground.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Gravel ground",
+      "file": "individual/010_gravel_ground.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Natural stone pavement",
+      "file": "individual/011_natural_stone_pavement.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Straight dirt path",
+      "file": "individual/012_straight_dirt_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Curved dirt path",
+      "file": "individual/013_curved_dirt_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 14,
+      "name": "T-junction dirt path",
+      "file": "individual/014_t_junction_dirt_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Crossroads dirt path",
+      "file": "individual/015_crossroads_dirt_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Straight stone path",
+      "file": "individual/016_straight_stone_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

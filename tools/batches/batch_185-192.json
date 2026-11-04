@@ -1,0 +1,40 @@
+{
+  "start": 185,
+  "category": "I \u2014 Harvestable Items and Products",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "185_lemon",
+      "name": "Lemon"
+    },
+    {
+      "slug": "186_pear",
+      "name": "Pear"
+    },
+    {
+      "slug": "187_chicken_egg",
+      "name": "Chicken egg"
+    },
+    {
+      "slug": "188_milk_bottle",
+      "name": "Milk bottle"
+    },
+    {
+      "slug": "189_cheese_wheel",
+      "name": "Cheese wheel"
+    },
+    {
+      "slug": "190_artisan_bread_loaf",
+      "name": "Artisan bread loaf"
+    },
+    {
+      "slug": "191_honey_jar",
+      "name": "Honey jar"
+    },
+    {
+      "slug": "192_flour_sack",
+      "name": "Flour sack"
+    }
+  ]
+}

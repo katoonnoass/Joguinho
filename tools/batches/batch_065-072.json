@@ -1,0 +1,40 @@
+{
+  "start": 65,
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "065_cherry_tree_healthy",
+      "name": "Cherry tree \u2014 healthy"
+    },
+    {
+      "slug": "066_cherry_tree_fruit_bearing",
+      "name": "Cherry tree \u2014 fruit-bearing"
+    },
+    {
+      "slug": "067_coconut_palm_healthy",
+      "name": "Coconut palm \u2014 healthy"
+    },
+    {
+      "slug": "068_coconut_palm_fruit_bearing",
+      "name": "Coconut palm \u2014 fruit-bearing"
+    },
+    {
+      "slug": "069_banana_tree_healthy",
+      "name": "Banana tree \u2014 healthy"
+    },
+    {
+      "slug": "070_banana_tree_fruit_bearing",
+      "name": "Banana tree \u2014 fruit-bearing"
+    },
+    {
+      "slug": "071_olive_tree_healthy",
+      "name": "Olive tree \u2014 healthy"
+    },
+    {
+      "slug": "072_olive_tree_fruit_bearing",
+      "name": "Olive tree \u2014 fruit-bearing"
+    }
+  ]
+}

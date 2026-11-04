@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/trees_065-072.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "assets": [
+    {
+      "id": 65,
+      "name": "Cherry tree \u2014 healthy",
+      "file": "individual/065_cherry_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 66,
+      "name": "Cherry tree \u2014 fruit-bearing",
+      "file": "individual/066_cherry_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 67,
+      "name": "Coconut palm \u2014 healthy",
+      "file": "individual/067_coconut_palm_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 68,
+      "name": "Coconut palm \u2014 fruit-bearing",
+      "file": "individual/068_coconut_palm_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 69,
+      "name": "Banana tree \u2014 healthy",
+      "file": "individual/069_banana_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 70,
+      "name": "Banana tree \u2014 fruit-bearing",
+      "file": "individual/070_banana_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 71,
+      "name": "Olive tree \u2014 healthy",
+      "file": "individual/071_olive_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 72,
+      "name": "Olive tree \u2014 fruit-bearing",
+      "file": "individual/072_olive_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

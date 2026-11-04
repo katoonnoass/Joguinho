@@ -1,0 +1,40 @@
+{
+  "start": 161,
+  "category": "H \u2014 Environment Decorations",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "161_empty_ceramic_flower_pot",
+      "name": "Empty ceramic flower pot"
+    },
+    {
+      "slug": "162_flower_filled_ceramic_pot",
+      "name": "Flower-filled ceramic pot"
+    },
+    {
+      "slug": "163_friendly_scarecrow",
+      "name": "Friendly scarecrow"
+    },
+    {
+      "slug": "164_rustic_wooden_bench",
+      "name": "Rustic wooden bench"
+    },
+    {
+      "slug": "165_picnic_table",
+      "name": "Picnic table"
+    },
+    {
+      "slug": "166_decorative_oak_tree",
+      "name": "Decorative oak tree"
+    },
+    {
+      "slug": "167_decorative_pine_tree",
+      "name": "Decorative pine tree"
+    },
+    {
+      "slug": "168_small_stone_fountain",
+      "name": "Small stone fountain"
+    }
+  ]
+}

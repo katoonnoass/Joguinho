@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/trees_057-064.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "assets": [
+    {
+      "id": 57,
+      "name": "Orange tree \u2014 healthy",
+      "file": "individual/057_orange_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 58,
+      "name": "Orange tree \u2014 fruit-bearing",
+      "file": "individual/058_orange_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 59,
+      "name": "Lemon tree \u2014 healthy",
+      "file": "individual/059_lemon_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 60,
+      "name": "Lemon tree \u2014 fruit-bearing",
+      "file": "individual/060_lemon_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 61,
+      "name": "Pear tree \u2014 healthy",
+      "file": "individual/061_pear_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 62,
+      "name": "Pear tree \u2014 fruit-bearing",
+      "file": "individual/062_pear_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 63,
+      "name": "Peach tree \u2014 healthy",
+      "file": "individual/063_peach_tree_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 64,
+      "name": "Peach tree \u2014 fruit-bearing",
+      "file": "individual/064_peach_tree_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

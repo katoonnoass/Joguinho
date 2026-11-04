@@ -1,0 +1,40 @@
+{
+  "start": 73,
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "073_raspberry_bush_healthy",
+      "name": "Raspberry bush \u2014 healthy"
+    },
+    {
+      "slug": "074_raspberry_bush_fruit_bearing",
+      "name": "Raspberry bush \u2014 fruit-bearing"
+    },
+    {
+      "slug": "075_small_farmhouse",
+      "name": "Small farmhouse"
+    },
+    {
+      "slug": "076_upgraded_farmhouse",
+      "name": "Upgraded farmhouse"
+    },
+    {
+      "slug": "077_small_red_barn",
+      "name": "Small red barn"
+    },
+    {
+      "slug": "078_large_upgraded_barn",
+      "name": "Large upgraded barn"
+    },
+    {
+      "slug": "079_small_grain_silo",
+      "name": "Small grain silo"
+    },
+    {
+      "slug": "080_large_grain_silo",
+      "name": "Large grain silo"
+    }
+  ]
+}

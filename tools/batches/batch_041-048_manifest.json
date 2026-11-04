@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/crops_041-048.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "B \u2014 Farm Crops",
+  "assets": [
+    {
+      "id": 41,
+      "name": "Lettuce \u2014 growing plant",
+      "file": "individual/041_lettuce_growing_plant.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 42,
+      "name": "Lettuce \u2014 mature harvest-ready",
+      "file": "individual/042_lettuce_mature_harvest_ready.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 43,
+      "name": "Strawberry \u2014 young seedling",
+      "file": "individual/043_strawberry_young_seedling.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 44,
+      "name": "Strawberry \u2014 growing plant",
+      "file": "individual/044_strawberry_growing_plant.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 45,
+      "name": "Strawberry \u2014 mature harvest-ready",
+      "file": "individual/045_strawberry_mature_harvest_ready.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 46,
+      "name": "Pumpkin \u2014 young seedling",
+      "file": "individual/046_pumpkin_young_seedling.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 47,
+      "name": "Pumpkin \u2014 growing plant",
+      "file": "individual/047_pumpkin_growing_plant.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 48,
+      "name": "Pumpkin \u2014 mature harvest-ready",
+      "file": "individual/048_pumpkin_mature_harvest_ready.png",
+      "category": "B \u2014 Farm Crops",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

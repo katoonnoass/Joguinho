@@ -1,0 +1,40 @@
+{
+  "start": 97,
+  "category": "D \u2014 Farm Buildings",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "097_tool_storage_shed",
+      "name": "Tool storage shed"
+    },
+    {
+      "slug": "098_stone_water_well",
+      "name": "Stone water well"
+    },
+    {
+      "slug": "099_chicken_idle",
+      "name": "Chicken \u2014 idle"
+    },
+    {
+      "slug": "100_chicken_walking",
+      "name": "Chicken \u2014 walking"
+    },
+    {
+      "slug": "101_chicken_eating",
+      "name": "Chicken \u2014 eating"
+    },
+    {
+      "slug": "102_cow_idle",
+      "name": "Cow \u2014 idle"
+    },
+    {
+      "slug": "103_cow_walking",
+      "name": "Cow \u2014 walking"
+    },
+    {
+      "slug": "104_cow_eating",
+      "name": "Cow \u2014 eating"
+    }
+  ]
+}

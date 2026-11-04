@@ -1,0 +1,40 @@
+{
+  "start": 89,
+  "category": "D \u2014 Farm Buildings",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "089_rustic_bakery",
+      "name": "Rustic bakery"
+    },
+    {
+      "slug": "090_dairy_production_building",
+      "name": "Dairy production building"
+    },
+    {
+      "slug": "091_animal_feed_mill",
+      "name": "Animal feed mill"
+    },
+    {
+      "slug": "092_tool_workshop",
+      "name": "Tool workshop"
+    },
+    {
+      "slug": "093_preserves_and_jam_kitchen",
+      "name": "Preserves and jam kitchen"
+    },
+    {
+      "slug": "094_fruit_juice_press",
+      "name": "Fruit juice press"
+    },
+    {
+      "slug": "095_candy_production_kitchen",
+      "name": "Candy production kitchen"
+    },
+    {
+      "slug": "096_farm_market_stall",
+      "name": "Farm market stall"
+    }
+  ]
+}

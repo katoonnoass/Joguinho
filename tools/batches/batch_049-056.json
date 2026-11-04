@@ -1,0 +1,40 @@
+{
+  "start": 49,
+  "category": "B \u2014 Farm Crops",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "049_sunflower_young_seedling",
+      "name": "Sunflower \u2014 young seedling"
+    },
+    {
+      "slug": "050_sunflower_growing_plant",
+      "name": "Sunflower \u2014 growing plant"
+    },
+    {
+      "slug": "051_sunflower_mature_harvest_ready",
+      "name": "Sunflower \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "052_sugar_cane_young_seedling",
+      "name": "Sugar cane \u2014 young seedling"
+    },
+    {
+      "slug": "053_sugar_cane_growing_plant",
+      "name": "Sugar cane \u2014 growing plant"
+    },
+    {
+      "slug": "054_sugar_cane_mature_harvest_ready",
+      "name": "Sugar cane \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "055_apple_tree_healthy",
+      "name": "Apple tree \u2014 healthy"
+    },
+    {
+      "slug": "056_apple_tree_fruit_bearing",
+      "name": "Apple tree \u2014 fruit-bearing"
+    }
+  ]
+}

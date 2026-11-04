@@ -1,0 +1,40 @@
+{
+  "start": 169,
+  "category": "H \u2014 Environment Decorations",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "169_wooden_birdhouse",
+      "name": "Wooden birdhouse"
+    },
+    {
+      "slug": "170_firewood_pile",
+      "name": "Firewood pile"
+    },
+    {
+      "slug": "171_blank_wooden_signboard",
+      "name": "Blank wooden signboard"
+    },
+    {
+      "slug": "172_small_decorative_pond",
+      "name": "Small decorative pond"
+    },
+    {
+      "slug": "173_harvested_wheat_bundle",
+      "name": "Harvested wheat bundle"
+    },
+    {
+      "slug": "174_corn_cob",
+      "name": "Corn cob"
+    },
+    {
+      "slug": "175_fresh_carrot",
+      "name": "Fresh carrot"
+    },
+    {
+      "slug": "176_potato",
+      "name": "Potato"
+    }
+  ]
+}

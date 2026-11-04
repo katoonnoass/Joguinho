@@ -1,0 +1,40 @@
+{
+  "start": 81,
+  "category": "D \u2014 Farm Buildings",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "081_chicken_coop",
+      "name": "Chicken coop"
+    },
+    {
+      "slug": "082_cow_stable",
+      "name": "Cow stable"
+    },
+    {
+      "slug": "083_pig_shelter",
+      "name": "Pig shelter"
+    },
+    {
+      "slug": "084_sheep_barn",
+      "name": "Sheep barn"
+    },
+    {
+      "slug": "085_goat_shelter",
+      "name": "Goat shelter"
+    },
+    {
+      "slug": "086_wooden_beehive_station",
+      "name": "Wooden beehive station"
+    },
+    {
+      "slug": "087_windmill",
+      "name": "Windmill"
+    },
+    {
+      "slug": "088_watermill",
+      "name": "Watermill"
+    }
+  ]
+}
