@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/terrain_017-024.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "A \u2014 Terrain and Ground",
+  "assets": [
+    {
+      "id": 17,
+      "name": "Curved stone path",
+      "file": "individual/017_curved_stone_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 18,
+      "name": "T-junction stone path",
+      "file": "individual/018_t_junction_stone_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Crossroads stone path",
+      "file": "individual/019_crossroads_stone_path.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Clean shallow water tile",
+      "file": "individual/020_clean_shallow_water_tile.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Water tile with ripples",
+      "file": "individual/021_water_tile_with_ripples.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Straight pond edge",
+      "file": "individual/022_straight_pond_edge.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Curved pond edge",
+      "file": "individual/023_curved_pond_edge.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Raised grassy terrain block",
+      "file": "individual/024_raised_grassy_terrain_block.png",
+      "category": "A \u2014 Terrain and Ground",
+      "canvas": "512x384",
+      "anchor": "256,160",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "start": 41,
+  "category": "B \u2014 Farm Crops",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "041_lettuce_growing_plant",
+      "name": "Lettuce \u2014 growing plant"
+    },
+    {
+      "slug": "042_lettuce_mature_harvest_ready",
+      "name": "Lettuce \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "043_strawberry_young_seedling",
+      "name": "Strawberry \u2014 young seedling"
+    },
+    {
+      "slug": "044_strawberry_growing_plant",
+      "name": "Strawberry \u2014 growing plant"
+    },
+    {
+      "slug": "045_strawberry_mature_harvest_ready",
+      "name": "Strawberry \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "046_pumpkin_young_seedling",
+      "name": "Pumpkin \u2014 young seedling"
+    },
+    {
+      "slug": "047_pumpkin_growing_plant",
+      "name": "Pumpkin \u2014 growing plant"
+    },
+    {
+      "slug": "048_pumpkin_mature_harvest_ready",
+      "name": "Pumpkin \u2014 mature harvest-ready"
+    }
+  ]
+}

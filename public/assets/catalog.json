@@ -1,7 +1,7 @@
 {
   "pack": "Joguinho \u2014 Isometric Farm Game Asset Pack",
   "total_assets": 200,
-  "generated": 16,
+  "generated": 48,
   "sheet_size": "2048x1024",
   "grid": "4 columns x 2 rows, 8 assets per sheet",
   "tile_canvas": "512x384",
@@ -19,7 +19,7 @@
       "count": 24,
       "first": 1,
       "last": 24,
-      "done": 16
+      "done": 24
     },
     {
       "name": "B \u2014 Farm Crops",
@@ -27,7 +27,7 @@
       "count": 30,
       "first": 25,
       "last": 54,
-      "done": 0
+      "done": 24
     },
     {
       "name": "C \u2014 Fruit Trees and Bushes",
@@ -262,7 +262,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/017_curved_stone_path.png"
     },
     {
       "id": 18,
@@ -271,7 +272,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/018_t_junction_stone_path.png"
     },
     {
       "id": 19,
@@ -280,7 +282,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/019_crossroads_stone_path.png"
     },
     {
       "id": 20,
@@ -289,7 +292,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/020_clean_shallow_water_tile.png"
     },
     {
       "id": 21,
@@ -298,7 +302,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/021_water_tile_with_ripples.png"
     },
     {
       "id": 22,
@@ -307,7 +312,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/022_straight_pond_edge.png"
     },
     {
       "id": 23,
@@ -316,7 +322,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/023_curved_pond_edge.png"
     },
     {
       "id": 24,
@@ -325,7 +332,8 @@
       "category": "A \u2014 Terrain and Ground",
       "anchor": "tile",
       "footprint": "1x1 tile (128x64 units)",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/024_raised_grassy_terrain_block.png"
     },
     {
       "id": 25,
@@ -334,7 +342,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/025_wheat_young_seedling.png"
     },
     {
       "id": 26,
@@ -343,7 +352,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/026_wheat_growing_plant.png"
     },
     {
       "id": 27,
@@ -352,7 +362,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/027_wheat_mature_harvest_ready.png"
     },
     {
       "id": 28,
@@ -361,7 +372,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/028_corn_young_seedling.png"
     },
     {
       "id": 29,
@@ -370,7 +382,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/029_corn_growing_plant.png"
     },
     {
       "id": 30,
@@ -379,7 +392,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/030_corn_mature_harvest_ready.png"
     },
     {
       "id": 31,
@@ -388,7 +402,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/031_carrot_young_seedling.png"
     },
     {
       "id": 32,
@@ -397,7 +412,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/032_carrot_growing_plant.png"
     },
     {
       "id": 33,
@@ -406,7 +422,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/033_carrot_mature_harvest_ready.png"
     },
     {
       "id": 34,
@@ -415,7 +432,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/034_potato_young_seedling.png"
     },
     {
       "id": 35,
@@ -424,7 +442,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/035_potato_growing_plant.png"
     },
     {
       "id": 36,
@@ -433,7 +452,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/036_potato_mature_harvest_ready.png"
     },
     {
       "id": 37,
@@ -442,7 +462,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/037_tomato_young_seedling.png"
     },
     {
       "id": 38,
@@ -451,7 +472,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/038_tomato_growing_plant.png"
     },
     {
       "id": 39,
@@ -460,7 +482,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/039_tomato_mature_harvest_ready.png"
     },
     {
       "id": 40,
@@ -469,7 +492,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/040_lettuce_young_seedling.png"
     },
     {
       "id": 41,
@@ -478,7 +502,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/041_lettuce_growing_plant.png"
     },
     {
       "id": 42,
@@ -487,7 +512,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/042_lettuce_mature_harvest_ready.png"
     },
     {
       "id": 43,
@@ -496,7 +522,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/043_strawberry_young_seedling.png"
     },
     {
       "id": 44,
@@ -505,7 +532,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/044_strawberry_growing_plant.png"
     },
     {
       "id": 45,
@@ -514,7 +542,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/045_strawberry_mature_harvest_ready.png"
     },
     {
       "id": 46,
@@ -523,7 +552,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/046_pumpkin_young_seedling.png"
     },
     {
       "id": 47,
@@ -532,7 +562,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/047_pumpkin_growing_plant.png"
     },
     {
       "id": 48,
@@ -541,7 +572,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/048_pumpkin_mature_harvest_ready.png"
     },
     {
       "id": 49,

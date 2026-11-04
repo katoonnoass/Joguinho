@@ -1,0 +1,40 @@
+{
+  "start": 33,
+  "category": "B \u2014 Farm Crops",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "033_carrot_mature_harvest_ready",
+      "name": "Carrot \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "034_potato_young_seedling",
+      "name": "Potato \u2014 young seedling"
+    },
+    {
+      "slug": "035_potato_growing_plant",
+      "name": "Potato \u2014 growing plant"
+    },
+    {
+      "slug": "036_potato_mature_harvest_ready",
+      "name": "Potato \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "037_tomato_young_seedling",
+      "name": "Tomato \u2014 young seedling"
+    },
+    {
+      "slug": "038_tomato_growing_plant",
+      "name": "Tomato \u2014 growing plant"
+    },
+    {
+      "slug": "039_tomato_mature_harvest_ready",
+      "name": "Tomato \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "040_lettuce_young_seedling",
+      "name": "Lettuce \u2014 young seedling"
+    }
+  ]
+}

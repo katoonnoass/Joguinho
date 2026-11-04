@@ -1,0 +1,40 @@
+{
+  "start": 25,
+  "category": "B \u2014 Farm Crops",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "025_wheat_young_seedling",
+      "name": "Wheat \u2014 young seedling"
+    },
+    {
+      "slug": "026_wheat_growing_plant",
+      "name": "Wheat \u2014 growing plant"
+    },
+    {
+      "slug": "027_wheat_mature_harvest_ready",
+      "name": "Wheat \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "028_corn_young_seedling",
+      "name": "Corn \u2014 young seedling"
+    },
+    {
+      "slug": "029_corn_growing_plant",
+      "name": "Corn \u2014 growing plant"
+    },
+    {
+      "slug": "030_corn_mature_harvest_ready",
+      "name": "Corn \u2014 mature harvest-ready"
+    },
+    {
+      "slug": "031_carrot_young_seedling",
+      "name": "Carrot \u2014 young seedling"
+    },
+    {
+      "slug": "032_carrot_growing_plant",
+      "name": "Carrot \u2014 growing plant"
+    }
+  ]
+}

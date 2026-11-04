@@ -34,6 +34,10 @@ from collections import deque
 import numpy as np
 from PIL import Image, ImageFilter
 
+# Fixed world scale: a raw 312 px ground tile becomes 512 px wide.
+# All bottom-anchored objects share it so relative sizes are preserved.
+WORLD_SCALE = 512.0 / 312.0
+
 
 def fill_holes(mask: np.ndarray) -> np.ndarray:
     """Fill interior holes (regions not connected to the border)."""
@@ -101,20 +105,33 @@ def erode(mask: np.ndarray, radius: int = 2) -> np.ndarray:
 
 
 def key_sheet(im: Image.Image, threshold: float = 0.08) -> Image.Image:
+    """Whole-sheet saturation key: threshold + close + feather (no per-object
+    cleanup yet — fill_holes / largest_component must run per cell so that
+    one large object cannot erase the other seven cells."""
     a = np.asarray(im.convert('RGB')).astype(np.float32)
     mx, mn = a.max(axis=2), a.min(axis=2)
     sat = (mx - mn) / (mx + 1e-3)
     mask = sat > threshold
-    # close small gaps between light pebbles/stones, then fill enclosed holes
-    mask = erode(dilate(mask, 3), 3)
-    mask = fill_holes(mask)
-    mask = largest_component(mask)
+    mask = erode(dilate(mask, 3), 3)          # close pebble/stone gaps
     mask = dilate(mask, 1)
-    # soften the cutout edge
     alpha = np.asarray(
         Image.fromarray((mask * 255).astype(np.uint8), 'L').filter(ImageFilter.GaussianBlur(1.0))
     ).astype(np.float32) / 255.0
     rgba = np.dstack([a, alpha * 255.0]).astype(np.uint8)
+    return Image.fromarray(rgba, 'RGBA')
+
+
+def clean_cell(cell: Image.Image) -> Image.Image:
+    """Per-cell cleanup: fill enclosed holes, keep the largest blob, feather."""
+    al = np.asarray(cell)[..., 3]
+    mask = al > 128
+    mask = fill_holes(mask)
+    mask = largest_component(mask)
+    mask = dilate(mask, 1)
+    alpha = np.asarray(
+        Image.fromarray((mask * 255).astype(np.uint8), 'L').filter(ImageFilter.GaussianBlur(1.0))
+    ).astype(np.float32) / 255.0
+    rgba = np.dstack([np.asarray(cell)[..., :3], alpha * 255.0]).astype(np.uint8)
     return Image.fromarray(rgba, 'RGBA')
 
 
@@ -176,7 +193,7 @@ def main() -> None:
 
     for i, asset in enumerate(assets):
         r, c = divmod(i, 4)
-        cell = cut.crop((c * cw, r * ch, (c + 1) * cw, (r + 1) * ch))
+        cell = clean_cell(cut.crop((c * cw, r * ch, (c + 1) * cw, (r + 1) * ch)))
         al = np.asarray(cell)[..., 3]
         ys, xs = np.nonzero(al > 40)
         if len(xs) == 0:
@@ -186,8 +203,8 @@ def main() -> None:
         crop = cell.crop((max(0, bx0 - pad), max(0, by0 - pad),
                           min(cell.width, bx1 + 1 + pad), min(cell.height, by1 + 1 + pad)))
 
-        canvas = Image.new('RGBA', (512, 384), (0, 0, 0, 0))
         if anchor_mode == 'tile':
+            canvas = Image.new('RGBA', (512, 384), (0, 0, 0, 0))
             # squash to a 2:1 top face and fill the 512 px footprint
             crop = crop.resize((crop.width, max(1, round(crop.height * 0.75))), Image.LANCZOS)
             scale = 512.0 / crop.width
@@ -196,28 +213,41 @@ def main() -> None:
             widest = int(np.argmax((al2 > 40).sum(axis=1)))
             canvas.alpha_composite(crop, (256 - crop.width // 2, 160 - widest))
             anchor = (256, 160)
-            shadow = False
+            canvas_size = '512x384'
         elif anchor_mode == 'center':
-            crop = fit_into(crop, 420, 300)
-            canvas.alpha_composite(crop, (256 - crop.width // 2, 192 - crop.height // 2))
-            anchor = (256, 192)
-            shadow = False
-        else:  # bottom
-            crop = fit_into(crop, 480, 300)
-            canvas.alpha_composite(crop, (256 - crop.width // 2, 300 - crop.height))
-            anchor = (256, 300)
-            shadow = True
-            canvas = add_shadow(canvas, 300, crop.width)
+            # UI icons: fill the frame (their size is not tied to world scale)
+            canvas = Image.new('RGBA', (512, 512), (0, 0, 0, 0))
+            crop = fit_into(crop, 420, 420)
+            canvas.alpha_composite(crop, (256 - crop.width // 2, 256 - crop.height // 2))
+            anchor = (256, 256)
+            canvas_size = '512x512'
+        else:  # bottom — standing world objects
+            # Fixed world scale so relative sizes (growth stages, prop sizes)
+            # match how the artist drew them; only the very largest objects
+            # are capped so they fit the canvas.
+            canvas = Image.new('RGBA', (512, 512), (0, 0, 0, 0))
+            scale = min(WORLD_SCALE, 480.0 / crop.width, 460.0 / crop.height)
+            nw = max(1, round(crop.width * scale))
+            nh = max(1, round(crop.height * scale))
+            crop = crop.resize((nw, nh), Image.LANCZOS)
+            base_y = 470
+            canvas.alpha_composite(crop, (256 - nw // 2, base_y - nh))
+            anchor = (256, base_y)
+            canvas_size = '512x512'
+            canvas = add_shadow(canvas, base_y + 8, nw)
 
         slug = asset['slug']
         canvas.save(os.path.join(args.out_dir, slug + '.png'))
 
-        # contact-sheet copy, centred in a cell with 32 px gutters
-        sheet_tile = canvas.resize((448, 336), Image.LANCZOS)
-        sheet.alpha_composite(sheet_tile, (c * cell_w + (cell_w - 448) // 2,
-                                           r * cell_h + (cell_h - 336) // 2))
+        # contact-sheet copy, fitted inside a 448x448 box, centred in the cell
+        box = min(448.0 / canvas.width, 448.0 / canvas.height, 1.0)
+        tw = max(1, round(canvas.width * box))
+        th = max(1, round(canvas.height * box))
+        sheet_tile = canvas.resize((tw, th), Image.LANCZOS)
+        sheet.alpha_composite(sheet_tile, (c * cell_w + (cell_w - tw) // 2,
+                                           r * cell_h + (cell_h - th) // 2))
         manifest.append(dict(id=start + i, name=asset['name'], file=f'individual/{slug}.png',
-                             category=category, canvas='512x384',
+                             category=category, canvas=canvas_size,
                              anchor=f'{anchor[0]},{anchor[1]}',
                              source_cell=[c + 1, r + 1]))
         print(f'{start + i:03d} {asset["name"]:36s} bbox={crop.size} anchor={anchor}')
