@@ -1,0 +1,40 @@
+{
+  "start": 105,
+  "category": "E \u2014 Farm Animals",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "105_pig_idle",
+      "name": "Pig \u2014 idle"
+    },
+    {
+      "slug": "106_pig_walking",
+      "name": "Pig \u2014 walking"
+    },
+    {
+      "slug": "107_pig_eating",
+      "name": "Pig \u2014 eating"
+    },
+    {
+      "slug": "108_sheep_idle",
+      "name": "Sheep \u2014 idle"
+    },
+    {
+      "slug": "109_sheep_walking",
+      "name": "Sheep \u2014 walking"
+    },
+    {
+      "slug": "110_sheep_eating",
+      "name": "Sheep \u2014 eating"
+    },
+    {
+      "slug": "111_goat_idle",
+      "name": "Goat \u2014 idle"
+    },
+    {
+      "slug": "112_goat_walking",
+      "name": "Goat \u2014 walking"
+    }
+  ]
+}

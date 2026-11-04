@@ -1,7 +1,7 @@
 {
   "pack": "Joguinho \u2014 Isometric Farm Game Asset Pack",
   "total_assets": 200,
-  "generated": 48,
+  "generated": 88,
   "sheet_size": "2048x1024",
   "grid": "4 columns x 2 rows, 8 assets per sheet",
   "tile_canvas": "512x384",
@@ -27,7 +27,7 @@
       "count": 30,
       "first": 25,
       "last": 54,
-      "done": 24
+      "done": 30
     },
     {
       "name": "C \u2014 Fruit Trees and Bushes",
@@ -35,7 +35,7 @@
       "count": 20,
       "first": 55,
       "last": 74,
-      "done": 0
+      "done": 20
     },
     {
       "name": "D \u2014 Farm Buildings",
@@ -43,7 +43,7 @@
       "count": 24,
       "first": 75,
       "last": 98,
-      "done": 0
+      "done": 14
     },
     {
       "name": "E \u2014 Farm Animals",
@@ -582,7 +582,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/049_sunflower_young_seedling.png"
     },
     {
       "id": 50,
@@ -591,7 +592,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/050_sunflower_growing_plant.png"
     },
     {
       "id": 51,
@@ -600,7 +602,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/051_sunflower_mature_harvest_ready.png"
     },
     {
       "id": 52,
@@ -609,7 +612,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/052_sugar_cane_young_seedling.png"
     },
     {
       "id": 53,
@@ -618,7 +622,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/053_sugar_cane_growing_plant.png"
     },
     {
       "id": 54,
@@ -627,7 +632,8 @@
       "category": "B \u2014 Farm Crops",
       "anchor": "bottom",
       "footprint": "1x1 tile",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/054_sugar_cane_mature_harvest_ready.png"
     },
     {
       "id": 55,
@@ -636,7 +642,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/055_apple_tree_healthy.png"
     },
     {
       "id": 56,
@@ -645,7 +652,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/056_apple_tree_fruit_bearing.png"
     },
     {
       "id": 57,
@@ -654,7 +662,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/057_orange_tree_healthy.png"
     },
     {
       "id": 58,
@@ -663,7 +672,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/058_orange_tree_fruit_bearing.png"
     },
     {
       "id": 59,
@@ -672,7 +682,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/059_lemon_tree_healthy.png"
     },
     {
       "id": 60,
@@ -681,7 +692,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/060_lemon_tree_fruit_bearing.png"
     },
     {
       "id": 61,
@@ -690,7 +702,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/061_pear_tree_healthy.png"
     },
     {
       "id": 62,
@@ -699,7 +712,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/062_pear_tree_fruit_bearing.png"
     },
     {
       "id": 63,
@@ -708,7 +722,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/063_peach_tree_healthy.png"
     },
     {
       "id": 64,
@@ -717,7 +732,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/064_peach_tree_fruit_bearing.png"
     },
     {
       "id": 65,
@@ -726,7 +742,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/065_cherry_tree_healthy.png"
     },
     {
       "id": 66,
@@ -735,7 +752,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/066_cherry_tree_fruit_bearing.png"
     },
     {
       "id": 67,
@@ -744,7 +762,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/067_coconut_palm_healthy.png"
     },
     {
       "id": 68,
@@ -753,7 +772,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/068_coconut_palm_fruit_bearing.png"
     },
     {
       "id": 69,
@@ -762,7 +782,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/069_banana_tree_healthy.png"
     },
     {
       "id": 70,
@@ -771,7 +792,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/070_banana_tree_fruit_bearing.png"
     },
     {
       "id": 71,
@@ -780,7 +802,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/071_olive_tree_healthy.png"
     },
     {
       "id": 72,
@@ -789,7 +812,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/072_olive_tree_fruit_bearing.png"
     },
     {
       "id": 73,
@@ -798,7 +822,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/073_raspberry_bush_healthy.png"
     },
     {
       "id": 74,
@@ -807,7 +832,8 @@
       "category": "C \u2014 Fruit Trees and Bushes",
       "anchor": "bottom",
       "footprint": "2x2 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/074_raspberry_bush_fruit_bearing.png"
     },
     {
       "id": 75,
@@ -816,7 +842,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/075_small_farmhouse.png"
     },
     {
       "id": 76,
@@ -825,7 +852,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/076_upgraded_farmhouse.png"
     },
     {
       "id": 77,
@@ -834,7 +862,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/077_small_red_barn.png"
     },
     {
       "id": 78,
@@ -843,7 +872,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/078_large_upgraded_barn.png"
     },
     {
       "id": 79,
@@ -852,7 +882,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/079_small_grain_silo.png"
     },
     {
       "id": 80,
@@ -861,7 +892,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/080_large_grain_silo.png"
     },
     {
       "id": 81,
@@ -870,7 +902,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/081_chicken_coop.png"
     },
     {
       "id": 82,
@@ -879,7 +912,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/082_cow_stable.png"
     },
     {
       "id": 83,
@@ -888,7 +922,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/083_pig_shelter.png"
     },
     {
       "id": 84,
@@ -897,7 +932,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/084_sheep_barn.png"
     },
     {
       "id": 85,
@@ -906,7 +942,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/085_goat_shelter.png"
     },
     {
       "id": 86,
@@ -915,7 +952,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/086_wooden_beehive_station.png"
     },
     {
       "id": 87,
@@ -924,7 +962,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/087_windmill.png"
     },
     {
       "id": 88,
@@ -933,7 +972,8 @@
       "category": "D \u2014 Farm Buildings",
       "anchor": "bottom",
       "footprint": "2x2\u20134x4 tiles",
-      "status": "pending"
+      "status": "done",
+      "file": "individual/088_watermill.png"
     },
     {
       "id": 89,

@@ -1,0 +1,40 @@
+{
+  "start": 137,
+  "category": "G \u2014 Fences and Structures",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "137_wooden_fence_end_piece",
+      "name": "Wooden fence end piece"
+    },
+    {
+      "slug": "138_closed_wooden_gate",
+      "name": "Closed wooden gate"
+    },
+    {
+      "slug": "139_open_wooden_gate",
+      "name": "Open wooden gate"
+    },
+    {
+      "slug": "140_straight_white_picket_fence",
+      "name": "Straight white picket fence"
+    },
+    {
+      "slug": "141_corner_white_picket_fence",
+      "name": "Corner white picket fence"
+    },
+    {
+      "slug": "142_white_picket_gate",
+      "name": "White picket gate"
+    },
+    {
+      "slug": "143_straight_stone_fence",
+      "name": "Straight stone fence"
+    },
+    {
+      "slug": "144_corner_stone_fence",
+      "name": "Corner stone fence"
+    }
+  ]
+}

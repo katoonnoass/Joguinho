@@ -1,0 +1,40 @@
+{
+  "start": 177,
+  "category": "I \u2014 Harvestable Items and Products",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "177_tomato",
+      "name": "Tomato"
+    },
+    {
+      "slug": "178_lettuce_head",
+      "name": "Lettuce head"
+    },
+    {
+      "slug": "179_strawberry",
+      "name": "Strawberry"
+    },
+    {
+      "slug": "180_pumpkin",
+      "name": "Pumpkin"
+    },
+    {
+      "slug": "181_harvested_sunflower",
+      "name": "Harvested sunflower"
+    },
+    {
+      "slug": "182_sugar_cane_bundle",
+      "name": "Sugar cane bundle"
+    },
+    {
+      "slug": "183_apple",
+      "name": "Apple"
+    },
+    {
+      "slug": "184_orange",
+      "name": "Orange"
+    }
+  ]
+}

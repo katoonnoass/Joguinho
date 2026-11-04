@@ -1,0 +1,40 @@
+{
+  "start": 145,
+  "category": "G \u2014 Fences and Structures",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "145_flower_covered_stone_wall",
+      "name": "Flower-covered stone wall"
+    },
+    {
+      "slug": "146_decorative_flower_archway",
+      "name": "Decorative flower archway"
+    },
+    {
+      "slug": "147_small_wooden_bridge",
+      "name": "Small wooden bridge"
+    },
+    {
+      "slug": "148_small_stone_bridge",
+      "name": "Small stone bridge"
+    },
+    {
+      "slug": "149_wooden_outdoor_steps",
+      "name": "Wooden outdoor steps"
+    },
+    {
+      "slug": "150_rustic_farm_lamp_post",
+      "name": "Rustic farm lamp post"
+    },
+    {
+      "slug": "151_large_decorative_rocks",
+      "name": "Large decorative rocks"
+    },
+    {
+      "slug": "152_small_pebble_cluster",
+      "name": "Small pebble cluster"
+    }
+  ]
+}

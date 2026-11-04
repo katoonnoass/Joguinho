@@ -1,0 +1,105 @@
+{
+  "sheet": "public/assets/sheets/farm_073-080.png",
+  "sheet_size": "2048x1024",
+  "grid": "4 columns x 2 rows",
+  "tile_canvas": "512x384",
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "assets": [
+    {
+      "id": 73,
+      "name": "Raspberry bush \u2014 healthy",
+      "file": "individual/073_raspberry_bush_healthy.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": 74,
+      "name": "Raspberry bush \u2014 fruit-bearing",
+      "file": "individual/074_raspberry_bush_fruit_bearing.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": 75,
+      "name": "Small farmhouse",
+      "file": "individual/075_small_farmhouse.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        1
+      ]
+    },
+    {
+      "id": 76,
+      "name": "Upgraded farmhouse",
+      "file": "individual/076_upgraded_farmhouse.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": 77,
+      "name": "Small red barn",
+      "file": "individual/077_small_red_barn.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 78,
+      "name": "Large upgraded barn",
+      "file": "individual/078_large_upgraded_barn.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": 79,
+      "name": "Small grain silo",
+      "file": "individual/079_small_grain_silo.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": 80,
+      "name": "Large grain silo",
+      "file": "individual/080_large_grain_silo.png",
+      "category": "C \u2014 Fruit Trees and Bushes",
+      "canvas": "512x512",
+      "anchor": "256,470",
+      "source_cell": [
+        4,
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "start": 113,
+  "category": "E \u2014 Farm Animals",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "113_goat_eating",
+      "name": "Goat \u2014 eating"
+    },
+    {
+      "slug": "114_duck_idle",
+      "name": "Duck \u2014 idle"
+    },
+    {
+      "slug": "115_duck_walking",
+      "name": "Duck \u2014 walking"
+    },
+    {
+      "slug": "116_duck_eating",
+      "name": "Duck \u2014 eating"
+    },
+    {
+      "slug": "117_watering_can",
+      "name": "Watering can"
+    },
+    {
+      "slug": "118_shovel",
+      "name": "Shovel"
+    },
+    {
+      "slug": "119_garden_hoe",
+      "name": "Garden hoe"
+    },
+    {
+      "slug": "120_garden_rake",
+      "name": "Garden rake"
+    }
+  ]
+}

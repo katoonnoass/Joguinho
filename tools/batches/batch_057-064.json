@@ -1,0 +1,40 @@
+{
+  "start": 57,
+  "category": "C \u2014 Fruit Trees and Bushes",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "057_orange_tree_healthy",
+      "name": "Orange tree \u2014 healthy"
+    },
+    {
+      "slug": "058_orange_tree_fruit_bearing",
+      "name": "Orange tree \u2014 fruit-bearing"
+    },
+    {
+      "slug": "059_lemon_tree_healthy",
+      "name": "Lemon tree \u2014 healthy"
+    },
+    {
+      "slug": "060_lemon_tree_fruit_bearing",
+      "name": "Lemon tree \u2014 fruit-bearing"
+    },
+    {
+      "slug": "061_pear_tree_healthy",
+      "name": "Pear tree \u2014 healthy"
+    },
+    {
+      "slug": "062_pear_tree_fruit_bearing",
+      "name": "Pear tree \u2014 fruit-bearing"
+    },
+    {
+      "slug": "063_peach_tree_healthy",
+      "name": "Peach tree \u2014 healthy"
+    },
+    {
+      "slug": "064_peach_tree_fruit_bearing",
+      "name": "Peach tree \u2014 fruit-bearing"
+    }
+  ]
+}

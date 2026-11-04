@@ -1,0 +1,40 @@
+{
+  "start": 129,
+  "category": "F \u2014 Tools and Farm Equipment",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "129_empty_wicker_basket",
+      "name": "Empty wicker basket"
+    },
+    {
+      "slug": "130_harvest_basket",
+      "name": "Harvest basket"
+    },
+    {
+      "slug": "131_wooden_water_barrel",
+      "name": "Wooden water barrel"
+    },
+    {
+      "slug": "132_wooden_storage_crate",
+      "name": "Wooden storage crate"
+    },
+    {
+      "slug": "133_stack_of_grain_sacks",
+      "name": "Stack of grain sacks"
+    },
+    {
+      "slug": "134_stack_of_hay_bales",
+      "name": "Stack of hay bales"
+    },
+    {
+      "slug": "135_straight_wooden_fence",
+      "name": "Straight wooden fence"
+    },
+    {
+      "slug": "136_corner_wooden_fence",
+      "name": "Corner wooden fence"
+    }
+  ]
+}

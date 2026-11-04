@@ -1,0 +1,40 @@
+{
+  "start": 193,
+  "category": "J \u2014 Game UI Icons",
+  "anchor": "center",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "193_gold_coin",
+      "name": "Gold coin"
+    },
+    {
+      "slug": "194_blue_premium_gem",
+      "name": "Blue premium gem"
+    },
+    {
+      "slug": "195_energy_icon",
+      "name": "Energy icon"
+    },
+    {
+      "slug": "196_experience_star",
+      "name": "Experience star"
+    },
+    {
+      "slug": "197_land_expansion_icon",
+      "name": "Land expansion icon"
+    },
+    {
+      "slug": "198_construction_icon",
+      "name": "Construction icon"
+    },
+    {
+      "slug": "199_harvest_action_icon",
+      "name": "Harvest action icon"
+    },
+    {
+      "slug": "200_delivery_order_icon",
+      "name": "Delivery order icon"
+    }
+  ]
+}

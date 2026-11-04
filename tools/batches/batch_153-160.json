@@ -1,0 +1,40 @@
+{
+  "start": 153,
+  "category": "H \u2014 Environment Decorations",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "153_fallen_tree_log",
+      "name": "Fallen tree log"
+    },
+    {
+      "slug": "154_chopped_tree_stump",
+      "name": "Chopped tree stump"
+    },
+    {
+      "slug": "155_low_green_bush",
+      "name": "Low green bush"
+    },
+    {
+      "slug": "156_pink_flowering_bush",
+      "name": "Pink flowering bush"
+    },
+    {
+      "slug": "157_yellow_flowering_bush",
+      "name": "Yellow flowering bush"
+    },
+    {
+      "slug": "158_daisy_flower_patch",
+      "name": "Daisy flower patch"
+    },
+    {
+      "slug": "159_tulip_flowerbed",
+      "name": "Tulip flowerbed"
+    },
+    {
+      "slug": "160_lavender_flowerbed",
+      "name": "Lavender flowerbed"
+    }
+  ]
+}

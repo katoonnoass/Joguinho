@@ -1,0 +1,40 @@
+{
+  "start": 121,
+  "category": "F \u2014 Tools and Farm Equipment",
+  "anchor": "bottom",
+  "threshold": 0.08,
+  "assets": [
+    {
+      "slug": "121_harvesting_sickle",
+      "name": "Harvesting sickle"
+    },
+    {
+      "slug": "122_metal_bucket",
+      "name": "Metal bucket"
+    },
+    {
+      "slug": "123_wooden_wheelbarrow",
+      "name": "Wooden wheelbarrow"
+    },
+    {
+      "slug": "124_empty_wooden_cart",
+      "name": "Empty wooden cart"
+    },
+    {
+      "slug": "125_cart_loaded_with_vegetables",
+      "name": "Cart loaded with vegetables"
+    },
+    {
+      "slug": "126_small_vintage_tractor",
+      "name": "Small vintage tractor"
+    },
+    {
+      "slug": "127_hay_trailer",
+      "name": "Hay trailer"
+    },
+    {
+      "slug": "128_hand_plow",
+      "name": "Hand plow"
+    }
+  ]
+}
